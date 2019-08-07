@@ -1,0 +1,1 @@
+The client of the app Finder made with React-Native

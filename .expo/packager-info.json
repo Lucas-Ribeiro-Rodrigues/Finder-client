@@ -3,7 +3,7 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": "https://5t-pan.anonymous.finder-client.exp.direct",
-  "packagerNgrokUrl": "https://packager.5t-pan.anonymous.finder-client.exp.direct",
-  "ngrokPid": 8660
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }

@@ -1,15 +1,18 @@
 import React, {Component} from 'React';
 const Logo = require("../../assets/icon.png")
-import {StyleSheet, View, Text, Image, KeyboardAvoidingView} from 'react-native';
+import {StyleSheet, View, Text, Image, KeyboardAvoidingView, Dimensions} from 'react-native';
 import { Container, Header, Content, Form, Item, Label, Input, Button } from 'native-base';
 import { TextInput } from 'react-native-gesture-handler';
+
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 export default class Login extends Component{
     
     static navigationOptions = {
         header: null,
     }
-
+    
     render(){
         return(
             <Container style={styles.container}>
@@ -48,7 +51,7 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
-        marginTop: 130,
+        marginTop: (SCREEN_HEIGHT/4) - 50,
         height: 360,
         width: 250,
         justifyContent: "space-around",

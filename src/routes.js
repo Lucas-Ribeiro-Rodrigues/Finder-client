@@ -5,8 +5,8 @@ import login from './pages/login';
 import register from './pages/register';
 
 const AppNavigator =  createStackNavigator({
-    login,
-    //register,
+    //login,
+    register,
 });
 
 const AppContainer = createAppContainer(AppNavigator);

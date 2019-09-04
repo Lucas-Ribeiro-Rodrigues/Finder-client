@@ -1,8 +1,9 @@
 import React, {Component} from 'React';
+import {StyleSheet, View, Image, KeyboardAvoidingView, Dimensions, Text} from 'react-native';
+import { Container, Header, Content, Form, Item, Input, Button } from 'native-base';
+import {TextInput} from "react-native-gesture-handler";
+import {postRegister} from "../../networking/API"
 const Logo = require("../../assets/icon.png")
-import {StyleSheet, View, Text, Image, KeyboardAvoidingView, Dimensions} from 'react-native';
-import { Container, Header, Content, Form, Item, Label, Input, Button } from 'native-base';
-
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
@@ -12,36 +13,47 @@ export default class Register extends Component {
         header: null,
     }
     
+    state = {name: '', surname: '', email: '', pass: '', confirmPass: ''}
+
+    registerHandler(name, surname, email, pass, confirmPass)
+    {
+        /*
+            verificar consistência dos dados 
+        */
+        let fullName = `${name} ${surname}`;
+        postRegister(fullName, email, pass);
+    }
+
     render(){
         return(
             <Container style={styles.container}>
                 <Content>
-                    <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
-                    <Form style={styles.content}>
-                        <Image source={Logo} style={{alignSelf: 'center'}}/>
-                        <View style={{flexDirection: "row", justifyContent: "space-between"}}>
-                            <Item rounded  style={styles.whiteWithMarginRight}>
-                                <Input placeholder='nome' placeholderTextColor="#b3b3b3"/>
-                            </Item>
+                    <KeyboardAvoidingView behavior="position" style={{flex: 1}}>
+                        <Form style={styles.content}>
+                            <Image source={Logo} style={{alignSelf: 'center'}}/>
+                            <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+                                <Item rounded  style={styles.whiteWithMarginRight}>
+                                    <Input placeholder='nome' placeholderTextColor="#b3b3b3" onChangeText = {value => this.setState({name: value})}/>
+                                </Item>
+                                <Item rounded  style={styles.white}>
+                                    <Input placeholder='sobrenome' placeholderTextColor="#b3b3b3" onChange = {value => this.setState({surname: value})}/>
+                                </Item>
+                            </View>
                             <Item rounded  style={styles.white}>
-                                <Input placeholder='sobrenome' placeholderTextColor="#b3b3b3"/>
+                                <Input placeholder='email' placeholderTextColor="#b3b3b3" onChange = {value => this.setState({email: value})}/>
                             </Item>
-                        </View>
-                        <Item rounded  style={styles.white}>
-                            <Input placeholder='email' placeholderTextColor="#b3b3b3"/>
-                        </Item>
-                        <View style={{flexDirection: "row"}}>
-                            <Item rounded  style={styles.whiteWithMarginRight}>
-                                <Input placeholder='senha' placeholderTextColor="#b3b3b3"/>
-                            </Item>
-                            <Item rounded  style={styles.white}>
-                                <Input placeholder='confirme a senha' placeholderTextColor="#b3b3b3"/>
-                            </Item>
-                        </View>
-                        <Button rounded style={styles.button}>
-                            <Text style={{color: "#FFF"}}>Cadastrar</Text>
-                        </Button>
-                    </Form>
+                            <View style={{flexDirection: "row"}}>
+                                <Item rounded  style={styles.whiteWithMarginRight}>
+                                    <Input placeholder='senha' placeholderTextColor="#b3b3b3" onChange = {value => this.setState({pass: value})}/>
+                                </Item>
+                                <Item rounded  style={styles.white}>
+                                    <Input placeholder='confirme a senha' placeholderTextColor="#b3b3b3" onChange = {value => this.setState({confirmPass: value})}/>
+                                </Item>
+                            </View>
+                            <Button rounded style={styles.button} onPress={() => {this.registerHandler(this.state.name, this.state.surname, this.state.email, this.state.pass, this.state.confirmPass)}}>
+                                <Text style={{color: "#FFF"}}>Cadastrar</Text>
+                            </Button>
+                        </Form>
                     </KeyboardAvoidingView>
                 </Content>
             </Container>
@@ -59,8 +71,8 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
         justifyContent: "space-around",
-        marginTop: 80,
-        minHeight: 500,
+        marginTop: (SCREEN_HEIGHT/4) - 50,
+        minHeight: 450,
         width: SCREEN_WIDTH - 15,
     },
     button: {

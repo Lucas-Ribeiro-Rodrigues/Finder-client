@@ -1,11 +1,11 @@
 import React, {Component} from 'React';
-const Logo = require("../../assets/icon.png")
 import {StyleSheet, View, Text, Image, KeyboardAvoidingView, Dimensions} from 'react-native';
-import { Container, Header, Content, Form, Item, Label, Input, Button } from 'native-base';
-import { TextInput } from 'react-native-gesture-handler';
+import {Container, Content, Form, Item, Input, Button } from 'native-base';
+import {userLogin} from "../../networking/API";
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
+const Logo = require("../../assets/icon.png");
 
 export default class Login extends Component{
     
@@ -13,6 +13,13 @@ export default class Login extends Component{
         header: null,
     }
     
+    state = {email: '',password: ''};
+
+    loginHandler(email, pass)
+    {
+        let response = userLogin(email, pass);
+    }
+
     render(){
         return(
             <Container style={styles.container}>
@@ -21,13 +28,23 @@ export default class Login extends Component{
                         <Form style={styles.content}>
                             <Image source={Logo} style={{alignSelf: 'center'}}/>
                             <Item rounded  style={styles.white}>
-                                <Input placeholder='Usuário' placeholderTextColor="#b3b3b3"/>
+                                <Input 
+                                placeholder='Email' 
+                                placeholderTextColor="#b3b3b3"
+                                onChangeText={value => {this.setState({email:value})}}/>
                             </Item>
                             <Item rounded style={styles.white}>
-                                <Input secureTextEntry={true} placeholder='Senha' placeholderTextColor="#b3b3b3"/>
+                                <Input 
+                                secureTextEntry 
+                                placeholder='Senha' 
+                                placeholderTextColor="#b3b3b3"
+                                onChangeText={value => {this.setState({password: value})}}/>
                             </Item>
                             <View style={{flexDirection: "row"}}>
-                                <Button rounded style={styles.button}>
+                                <Button 
+                                rounded 
+                                style={styles.button}
+                                onPress={() => this.loginHandler(this.state.email, this.state.password)}>
                                     <Text style={{color: "#FFF"}}>Entrar</Text>
                                 </Button>
                                 <Button transparent>

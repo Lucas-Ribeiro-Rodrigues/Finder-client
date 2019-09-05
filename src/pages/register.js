@@ -2,7 +2,7 @@ import React, {Component} from 'React';
 import {StyleSheet, View, Image, KeyboardAvoidingView, Dimensions, Text} from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Button } from 'native-base';
 import {TextInput} from "react-native-gesture-handler";
-import {postRegister} from "../../networking/API"
+import {postUser} from "../../networking/API.js"
 const Logo = require("../../assets/icon.png")
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -13,15 +13,18 @@ export default class Register extends Component {
         header: null,
     }
     
-    state = {name: '', surname: '', email: '', pass: '', confirmPass: ''}
+    state = {name: '', surname: '', email: '', pass: '', confirmPass: '', error:false}
 
     registerHandler(name, surname, email, pass, confirmPass)
     {
         /*
             verificar consistência dos dados 
         */
+        if(pass != confirmPass)
+            return;
+
         let fullName = `${name} ${surname}`;
-        postRegister(fullName, email, pass);
+        postUser(fullName, email, pass);
     }
 
     render(){
@@ -36,18 +39,33 @@ export default class Register extends Component {
                                     <Input placeholder='nome' placeholderTextColor="#b3b3b3" onChangeText = {value => this.setState({name: value})}/>
                                 </Item>
                                 <Item rounded  style={styles.white}>
-                                    <Input placeholder='sobrenome' placeholderTextColor="#b3b3b3" onChange = {value => this.setState({surname: value})}/>
+                                    <Input placeholder='sobrenome' placeholderTextColor="#b3b3b3" onChangeText = {value => this.setState({surname: value})}/>
                                 </Item>
                             </View>
                             <Item rounded  style={styles.white}>
-                                <Input placeholder='email' placeholderTextColor="#b3b3b3" onChange = {value => this.setState({email: value})}/>
+                                <Input placeholder='email' placeholderTextColor="#b3b3b3" onChangeText = {value => this.setState({email: value})}/>
                             </Item>
                             <View style={{flexDirection: "row"}}>
                                 <Item rounded  style={styles.whiteWithMarginRight}>
-                                    <Input placeholder='senha' placeholderTextColor="#b3b3b3" onChange = {value => this.setState({pass: value})}/>
+                                    <Input 
+                                    placeholder='senha' 
+                                    placeholderTextColor="#b3b3b3" 
+                                    secureTextEntry
+                                    onChangeText = {value => this.setState({pass: value})}/>
                                 </Item>
-                                <Item rounded  style={styles.white}>
-                                    <Input placeholder='confirme a senha' placeholderTextColor="#b3b3b3" onChange = {value => this.setState({confirmPass: value})}/>
+                                <Item rounded  style={styles.white} error={this.state.error} >
+                                    <Input 
+                                    placeholder='confirme a senha' 
+                                    placeholderTextColor="#b3b3b3"
+                                    secureTextEntry
+                                    onChangeText = {value => {
+                                                this.setState({confirmPass: value});
+                                                if(value !== this.state.pass && value != "")
+                                                    this.setState({error: true});
+                                                else
+                                                    this.setState({error: false});
+                                            }
+                                        }/>
                                 </Item>
                             </View>
                             <Button rounded style={styles.button} onPress={() => {this.registerHandler(this.state.name, this.state.surname, this.state.email, this.state.pass, this.state.confirmPass)}}>

@@ -1,5 +1,7 @@
-import React, {Component} from 'React';
-import {Dimensions, Text} from 'react-native';
+import React, { Component } from 'React';
+import { Dimensions, Text , View} from 'react-native';
+import MyFooter from '../components/MyFooter';
+import { Container, Content } from 'native-base';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -9,9 +11,15 @@ export default class Map extends Component{
     render()
     {
         const {navigation} = this.props;
-        alert(navigation.getParam('name', {}));
         return(
-            <Text>Hello</Text>
+            <Container>
+                <Content>
+                    <View>
+                        <Text>Map page</Text>
+                    </View>
+                </Content>                
+                <MyFooter/>
+            </Container>
         )
     }
 }

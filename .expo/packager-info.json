@@ -1,10 +1,10 @@
 {
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 10140,
-  "expoServerNgrokUrl": "https://5t-pan.ribeiro652000.finder-client.exp.direct",
-  "packagerNgrokUrl": "https://packager.5t-pan.ribeiro652000.finder-client.exp.direct",
-  "ngrokPid": 10548,
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "devToolsPort": 19002,
   "webpackServerPort": null
 }

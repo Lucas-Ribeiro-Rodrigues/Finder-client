@@ -1,5 +1,5 @@
 import React, {Component} from 'React';
-import {StyleSheet, View, Image, KeyboardAvoidingView, Dimensions, Text} from 'react-native';
+import {StyleSheet, View, Image, KeyboardAvoidingView, Dimensions, Text, Keyboard} from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Button } from 'native-base';
 import {TextInput} from "react-native-gesture-handler";
 import {postUser} from "../../networking/API.js"
@@ -20,6 +20,8 @@ export default class Register extends Component {
         /*
             verificar consistência dos dados 
         */
+        Keyboard.dismiss();
+        
         if(pass != confirmPass)
             return;
 
@@ -108,7 +110,7 @@ const styles = StyleSheet.create({
     button: {
         flex: 1,
         flexDirection: "row",
-        backgroundColor: "#50A083",
+        backgroundColor: "#1f8686",
     },
     white: {
         flex: 1,

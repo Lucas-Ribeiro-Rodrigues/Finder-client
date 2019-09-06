@@ -15,19 +15,35 @@ export default class Login extends Component{
     
     state = {email: '',password: ''};
 
-    loginHandler(email, pass)
+    showToast()
     {
-        Keyboard.dismiss();
-        const {navigate} = this.props.navigation; 
-        userLogin(email, pass)
-        .then(value => navigate('Map', {name: value.Name}))
-        .catch(error => Toast.show({
+        Toast.show({
             text: 'Senha ou email incorreto',
             type: 'warning',
             style: {
                 backgroundColor: '#52059f',
             }
-        }))
+        })
+    }
+
+    loginHandler(email, pass)
+    {
+        Keyboard.dismiss();
+        const {navigate} = this.props.navigation; 
+
+        if(this.state.name == "" || this.state.password == "")
+        {
+            this.showToast();
+            return;
+        }
+
+        userLogin(email, pass)
+        .then(value => {
+            alert(value.Name)
+                        if(value.Name != undefined) 
+                            navigate('Map', {name: value.Name});
+                        else this.showToast();})
+        .catch(error => this.showToast())
     }
 
     render(){

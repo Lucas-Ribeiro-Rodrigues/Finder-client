@@ -7,7 +7,7 @@ const AppNavigator =  createStackNavigator({
     Login   : {screen: login},
     Register: {screen: register},
     Map     : {screen: map} 
-}, {initialRouteName: 'Login'});
+}, {initialRouteName: 'Map'});
 
 const AppContainer = createAppContainer(AppNavigator);
 export default AppContainer;

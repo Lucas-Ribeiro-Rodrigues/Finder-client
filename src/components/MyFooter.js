@@ -4,10 +4,14 @@ import { Footer, FooterTab, Button, Icon, Image} from "native-base";
 
 export default class MyFooter extends Component{
 
-    state = {btnSelected: 1}
+    static navigationOptions = {
+        title: 'Mapa',
+    }
 
-    render()
-    {
+    state = {btnSelected: 1}
+    
+    render(){
+        const {navigate} = this.props.navigation;             
         return(
         <Footer>
             <FooterTab style={styles.footer} >
@@ -30,7 +34,7 @@ export default class MyFooter extends Component{
                     <Text style={styles.text_white}>Perdidos</Text>
                 </Button>
                 <Button vertical
-                        onPress = {() => {this.setState({btnSelected: 4})}}
+                        onPress = {() => {this.setState({btnSelected: 4}); navigate('Profile')}}
                         style = {(this.state.btnSelected== 4)?styles.footerButtonSelected:styles.footer}>
                     <Icon name="person"/>
                     <Text style={styles.text_white}>Perfil</Text>

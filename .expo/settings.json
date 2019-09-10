@@ -1,7 +1,7 @@
 {
-  "hostType": "lan",
+  "urlRandomness": "h5-3wp",
+  "hostType": "tunnel",
   "lanType": "ip",
   "dev": true,
-  "minify": false,
-  "urlRandomness": "5t-pan"
+  "minify": false
 }

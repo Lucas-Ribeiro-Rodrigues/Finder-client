@@ -4,13 +4,13 @@ import { View, Text } from 'react-native';
 export default class Profile extends Component{
 
     static navigationOptions = {
-        title: 'Perfil',
+        title: 'Itens perdidos',
     }
-    
+
     render()
     {
         return(
-            <Text>Página de perfil</Text>
+            <Text>Página de itens perdidos</Text>
         )
     }
 }

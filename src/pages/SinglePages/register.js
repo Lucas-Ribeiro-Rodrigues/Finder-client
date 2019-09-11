@@ -1,7 +1,6 @@
 import React, {Component} from 'React';
 import {StyleSheet, View, Image, KeyboardAvoidingView, Dimensions, Text, Keyboard} from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Button } from 'native-base';
-import {TextInput} from "react-native-gesture-handler";
 import {postUser} from "../../../networking/API.js"
 const Logo = require("../../../assets/icon.png")
 const SCREEN_WIDTH = Dimensions.get('window').width;

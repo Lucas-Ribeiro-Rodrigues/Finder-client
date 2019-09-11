@@ -1,16 +1,16 @@
 import React, {Component} from 'React';
 import { View, Text } from 'react-native';
 
-export default class Profile extends Component{
+export default class FoundItemsList extends Component{
 
     static navigationOptions = {
-        title: 'Perfil',
+        title: 'Itens achados',
     }
-    
+
     render()
     {
         return(
-            <Text>Página de perfil</Text>
+            <Text>Página de itens achados</Text>
         )
     }
 }

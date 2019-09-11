@@ -40,7 +40,7 @@ export default class Login extends Component{
         userLogin(email, pass)
         .then(value => {
                         if(value.Name != undefined) 
-                            navigate('Map', {name: value.Name});
+                            navigate('Main', {name: value.Name});
                         else this.showToast();})
         .catch(error => this.showToast())
     }

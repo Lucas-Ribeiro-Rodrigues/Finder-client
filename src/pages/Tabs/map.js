@@ -1,7 +1,7 @@
 import React, { Component } from 'React';
 import { Dimensions, Text , View} from 'react-native';
 import MyFooter from '../main';
-import { Container, Content } from 'native-base';
+import { Container, Content, Fab, Icon } from 'native-base';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;

@@ -1,14 +1,15 @@
 import React, { Component } from "React";
 import { Text, StyleSheet }      from "react-native"
-import { Footer, FooterTab, Button, Icon, Container, Content, Header, Title} from "native-base";
+import { Footer, FooterTab, Button, Icon, Container, Content, Fab} from "native-base";
 import Map              from './Tabs/map'; 
 import FoundItemsList   from './Tabs/foundItemsList'; 
 import LostItemsList    from './Tabs/lostItemsList'; 
 import Profile          from './Tabs/profile';
+import { NavigationEvents } from "react-navigation";
 
 export default class Main extends Component{
 
-    state = {btnSelected: 1, title: 'Mapa'}
+    state = {btnSelected: 1, title: 'Mapa', active: false}
     
     static navigationOptions = ({ navigation }) => {
         const { state } = navigation;
@@ -18,12 +19,8 @@ export default class Main extends Component{
         };
       };
 
-    componentWillReceiveProps()
-    {
-        const title = this.state.title;
-        
-    }
     render(){
+        const {navigate} = this.props.navigation;
         let SelectedTab = null;
         switch(this.state.btnSelected)
         {
@@ -46,6 +43,21 @@ export default class Main extends Component{
             <Content>
                 <SelectedTab/>
             </Content>
+            <Fab
+            active = {this.state.active}
+            direction="down"
+            style={{ backgroundColor: '#059F9F' }}
+            containerStyle={{  }}
+            position="topRight"
+            onPress={() => {this.setState({ active: !this.state.active });}}>
+                <Icon type="FontAwesome" name="plus"/>
+                {this.state.active? <Button style={{ backgroundColor: '#1f8686' }} onPress={() => navigate('FoundItemRegister')}>
+                    <Icon name="ios-happy"/>
+                </Button>:null}
+                {this.state.active? <Button style={{ backgroundColor: '#1f8686' }} onPress={() => navigate('LostItemRegister')}>
+                    <Icon name="md-search"/>
+                </Button>:null}
+            </Fab>
             <Footer>
                 <FooterTab style={styles.footer} >
                     <Button vertical 

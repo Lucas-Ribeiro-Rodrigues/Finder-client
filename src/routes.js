@@ -14,8 +14,8 @@ const AppNavigator =  createStackNavigator({
     Profile : {screen: profile},
     Main    : {screen: main}, 
     LostItemRegister: {screen: lostItemRegister},
-    FoundItemRegister: {screen: foundItemRegister}
-}, {initialRouteName: 'Main'});
+    FoundItemRegister: {screen: foundItemRegister}   
+}, {initialRouteName: 'Login'});
 
 const AppContainer = createAppContainer(AppNavigator);
 export default AppContainer;

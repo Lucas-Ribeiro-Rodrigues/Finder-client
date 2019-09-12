@@ -108,6 +108,6 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     white: {
-        backgroundColor: "#FFF",
+        backgroundColor: "#E0E0E0",
     }
   });

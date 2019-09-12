@@ -5,8 +5,7 @@ import Map              from './Tabs/map';
 import FoundItemsList   from './Tabs/foundItemsList'; 
 import LostItemsList    from './Tabs/lostItemsList'; 
 import Profile          from './Tabs/profile';
-import { NavigationEvents } from "react-navigation";
-
+import MapView from 'react-native-maps'
 export default class Main extends Component{
 
     state = {btnSelected: 1, title: 'Mapa', active: false}
@@ -15,7 +14,11 @@ export default class Main extends Component{
         const { state } = navigation;
       
         return {
-            title: `${state.params && state.params.title ? state.params.title : 'Mapa'}`,
+                title: `${state.params && state.params.title ? state.params.title : 'Mapa'}`,
+                headerStyle: {
+                    backgroundColor: '#059F9F',
+                },
+                headerTintColor: '#FFF',
         };
       };
 
@@ -40,9 +43,9 @@ export default class Main extends Component{
 
         return(
         <Container>
-            <Content>
+            {this.state.btnSelected != 1 ? <Content>
                 <SelectedTab/>
-            </Content>
+            </Content>: <SelectedTab/>}
             <Fab
             active = {this.state.active}
             direction="down"

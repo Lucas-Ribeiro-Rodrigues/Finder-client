@@ -3,10 +3,6 @@ import { View, Text } from 'react-native';
 
 export default class FoundItemsList extends Component{
 
-    static navigationOptions = {
-        title: 'Itens achados',
-    }
-
     render()
     {
         return(

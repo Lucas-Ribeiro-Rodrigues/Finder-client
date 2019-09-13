@@ -76,3 +76,28 @@ export default class LostItemRegister extends Component{
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#059F9F',
+      flexDirection: "column",
+      alignItems: "center",
+    },
+    content: {
+        flex: 1,
+        marginTop: (SCREEN_HEIGHT/4) ,
+        height: 360,
+        width: 250,
+        justifyContent: "space-around",
+    },
+    button: {
+        flex: 1,
+        flexDirection: "row",
+        backgroundColor: "#1f8686",
+        marginRight: 10,
+    },
+    white: {
+        backgroundColor: "#E0E0E0",
+    }
+  });

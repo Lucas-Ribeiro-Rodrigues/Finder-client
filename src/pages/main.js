@@ -47,17 +47,19 @@ export default class Main extends Component{
                 <SelectedTab/>
             </Content>: <SelectedTab/>}
             <Fab
-            active = {this.state.active}
-            direction="down"
-            style={{ backgroundColor: '#059F9F' }}
-            containerStyle={{  }}
-            position="topRight"
-            onPress={() => {this.setState({ active: !this.state.active });}}>
-                <Icon type="FontAwesome" name="plus"/>
-                {this.state.active? <Button style={{ backgroundColor: '#1f8686' }} onPress={() => navigate('FoundItemRegister')}>
+                active = {this.state.active}
+                direction="down"
+                style={{ backgroundColor: '#059F9F' }}
+                containerStyle={{  }}
+                position="topRight"
+                onPress={() => {this.setState({ active: !this.state.active });}}>
+                <Icon 
+                    type="FontAwesome" 
+                    name="plus"/>
+                {this.state.active? <Button style={{ backgroundColor: '#1f8686' }} onPress={() => navigate('ItemRegister', {navigation: this.props.navigation})}>
                     <Icon name="ios-happy"/>
                 </Button>:null}
-                {this.state.active? <Button style={{ backgroundColor: '#1f8686' }} onPress={() => navigate('LostItemRegister')}>
+                {this.state.active? <Button style={{ backgroundColor: '#1f8686' }} onPress={() => navigate('ItemRegister', {navigation: this.props.navigation})}>
                     <Icon name="md-search"/>
                 </Button>:null}
             </Fab>

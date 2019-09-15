@@ -1,9 +1,9 @@
 {
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 10108,
+  "packagerPid": 9960,
   "expoServerNgrokUrl": "https://h5-3wp.anonymous.finder-client.exp.direct",
   "packagerNgrokUrl": "https://packager.h5-3wp.anonymous.finder-client.exp.direct",
-  "ngrokPid": 11032,
+  "ngrokPid": 10600,
   "devToolsPort": 19002
 }

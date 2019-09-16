@@ -1,16 +1,14 @@
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 import login                from './pages/SinglePages/login';
 import register             from './pages/SinglePages/register';
-import foundItemRegister    from './pages/SinglePages/foundItemRegister';
-import lostItemRegister     from './pages/SinglePages/lostItemRegister';
+import itemRegister    from './pages/SinglePages/Wizards/itemRegister/itemRegister';
 import main                 from './pages/main';
 
 const AppNavigator =  createStackNavigator({
     Login   : {screen: login},
     Register: {screen: register},
     Main    : {screen: main}, 
-    LostItemRegister: {screen: lostItemRegister},
-    FoundItemRegister: {screen: foundItemRegister}   
+    ItemRegister: {screen: itemRegister}   
 }, {initialRouteName: 'Main'});
 
 const AppContainer = createAppContainer(AppNavigator);

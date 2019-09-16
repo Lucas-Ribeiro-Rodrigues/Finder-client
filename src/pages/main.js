@@ -6,6 +6,7 @@ import FoundItemsList   from './Tabs/foundItemsList';
 import LostItemsList    from './Tabs/lostItemsList'; 
 import Profile          from './Tabs/profile';
 import MapView from 'react-native-maps'
+
 export default class Main extends Component{
 
     state = {btnSelected: 1, title: 'Mapa', active: false}

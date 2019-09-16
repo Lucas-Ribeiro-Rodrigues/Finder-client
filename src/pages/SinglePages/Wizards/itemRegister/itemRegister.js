@@ -1,17 +1,15 @@
 import MultiStep from 'react-native-multistep-wizard';
 import React, { Component } from "React";
 import {View} from 'react-native'
-import Tipo from './Steps/tipo'
+import Categoria from './Steps/categoria'
 /*import StepTwo from './StepTwo'
 import StepThree from './StepThree'*/
 
-const steps = [
-              {name: 'Tipo', component: <Tipo/>},
-              /*{name: 'StepTwo', component: <StepTwo/>},
-              {name: 'StepThree', component: <StepThree/>},*/
-            ];
+export default class ItemRegister extends Component{
 
-export default class Register extends Component{
+    constructor(props){
+        super(props);
+    }
 
     static navigationOptions = {
         header: null,
@@ -22,8 +20,13 @@ export default class Register extends Component{
         }
 
     render(){
+        const steps = [
+            {name: 'Categoria', component: <Categoria navigation = {this.props.navigation}/>},
+            /*{name: 'StepTwo', component: <StepTwo/>},
+            {name: 'StepThree', component: <StepThree/>},*/
+          ];
         return(
-            <View style>
+            <View>
                 <MultiStep steps={steps} onFinish={this.finish}/>
             </View>
         )

@@ -1,5 +1,5 @@
 import MultiStep from 'react-native-multistep-wizard';
-import React, { Component } from "../../../../../../../AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/react";
+import React, { Component } from "react";
 import {View} from 'react-native'
 import Category from './Steps/category'
 /*import StepTwo from './StepTwo'

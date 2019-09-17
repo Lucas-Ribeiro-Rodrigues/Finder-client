@@ -1,7 +1,7 @@
 import MultiStep from 'react-native-multistep-wizard';
 import React, { Component } from "React";
 import {View} from 'react-native'
-import Categoria from './Steps/categoria'
+import Category from './Steps/category'
 /*import StepTwo from './StepTwo'
 import StepThree from './StepThree'*/
 
@@ -21,7 +21,7 @@ export default class ItemRegister extends Component{
 
     render(){
         const steps = [
-            {name: 'Categoria', component: <Categoria navigation = {this.props.navigation}/>},
+            {name: 'Category', component: <Category navigation = {this.props.navigation}/>},
             /*{name: 'StepTwo', component: <StepTwo/>},
             {name: 'StepThree', component: <StepThree/>},*/
           ];

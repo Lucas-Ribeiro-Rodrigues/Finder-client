@@ -1,0 +1,41 @@
+{
+    "Categoria": {
+        "Eletronico":{
+            "Subcategoria":[
+                "Celular",
+                "Notebook",
+                "Fone",
+                "Cabos"
+            ],
+            "Marca": "necessary",
+            "Modelo": "unecessary",
+            "Cor Primaria": [
+                "Preto",
+                "Branco",
+                "Vermelho",
+                "Verde",
+                "Azul",
+                "Amarelo"
+            ],
+            "Cor Secundaria": [
+                "Preto",
+                "Branco",
+                "Vermelho",
+                "Verde",
+                "Azul",
+                "Amarelo"
+            ],
+            "Numero de serie": "unecessary"
+        },
+        "Documento": {
+            "Subcategoria":[
+                "RG",
+                "CNH",
+                "CPF",
+                "Passaporte"
+            ],
+            "Nome Completo": "necessary",
+            "Numero": "unecessary"
+        }
+    }
+}

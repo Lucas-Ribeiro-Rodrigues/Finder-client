@@ -12,42 +12,105 @@ export default class Category extends Component{
         super(props);
     }
 
-    state = {selectedItemValue: ''};
+    state = {selectedItemValue: '', activeButton: 0};
     
-    backButtonHandler = () => {
-        const {navigate} = this.props.navigation;
-        Alert.alert("Tem certeza?", 
-                    "Você perderá todos os dados colocados sobre o item até agora e voltará para a página principal",
-                    [
-                        {text: "OK", onPress: () => navigate("Main")},
-                        {text: "Cancelar", style: "cancel"}
-                    ], {cancelable: true});
+    buttonPressHandler = (index) => {
+        this.setState({activeButton: index});
     }
-
     render()
     {
         const {navigate} = this.props.navigation;
+        const active = this.state.buttonActive;
         return(
-            <Item picker fixedLabel style={{width: SCREEN_WIDTH - 30}}>
-                <Picker
-                mode="dropdown"
-                iosIcon={<Icon name="arrow-down" />}
-                placeholder="Tipo"
-                placeholderStyle={{ color: "#bfc6ea" }}
-                placeholderIconColor="#007aff"
-                selectedValue={this.state.selectedItemValue}
-                style={{height: 50}}
-                onValueChange={(itemValue, itemIndex) => {this.props.onValueChangeHandler(itemValue, itemIndex); this.setState({selectedItemValue: itemValue})}}>
-                    <Picker.Item label="Categoria" value="Category"/>
-                    <Picker.Item label="Eletrônico" value="Eletronic"/>
-                    <Picker.Item label="Documento" value="Document"/>
-                    <Picker.Item label="Animal" value="Animal"/>
-                    <Picker.Item label="Vestuário" value="Clothing"/>
-                    <Picker.Item label="Acessórios" value="Acessories"/>
-                    <Picker.Item label="Cartões" value="Cards"/>
-                    <Picker.Item label="Outros" value="Outros"/>
-                </Picker>
-            </Item>
+            <View>
+            <TouchableOpacity 
+                style={this.state.activeButton == 0 ? styles.buttonActive:styles.buttonNotActive} 
+                onPress={() => {this.buttonPressHandler(0)}}>
+                <Text 
+                    style={(this.state.activeButton == 0 ? styles.textButtonActive:styles.textButtonNotActive)}>
+                    Eletrônico
+                </Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+                style={this.state.activeButton == 1 ? styles.buttonActive:styles.buttonNotActive} 
+                onPress={() => {this.buttonPressHandler(1)}}>
+                <Text 
+                    style={(this.state.activeButton == 1 ? styles.textButtonActive:styles.textButtonNotActive)}>
+                    Documento
+                </Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+                style={this.state.activeButton == 2 ? styles.buttonActive:styles.buttonNotActive} 
+                onPress={() => {this.buttonPressHandler(2)}}>
+                <Text 
+                    style={(this.state.activeButton == 2 ? styles.textButtonActive:styles.textButtonNotActive)}>
+                    Animal
+                </Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+                style={this.state.activeButton == 3 ? styles.buttonActive:styles.buttonNotActive} 
+                onPress={() => {this.buttonPressHandler(3)}}>
+                <Text 
+                    style={(this.state.activeButton == 3 ? styles.textButtonActive:styles.textButtonNotActive)}>
+                    Vestuário
+                </Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+                style={this.state.activeButton == 4 ? styles.buttonActive:styles.buttonNotActive} 
+                onPress={() => {this.buttonPressHandler(4)}}>
+                <Text 
+                    style={(this.state.activeButton == 4 ? styles.textButtonActive:styles.textButtonNotActive)}>
+                    Acessórios
+                </Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+                style={this.state.activeButton == 5 ? styles.buttonActive:styles.buttonNotActive} 
+                onPress={() => {this.buttonPressHandler(5)}}>
+                <Text 
+                    style={(this.state.activeButton == 5 ? styles.textButtonActive:styles.textButtonNotActive)}>
+                    Cartões
+                </Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+                style={this.state.activeButton == 6 ? styles.buttonActive:styles.buttonNotActive} 
+                onPress={() => {this.buttonPressHandler(6)}}>
+                <Text 
+                    style={(this.state.activeButton == 6 ? styles.textButtonActive:styles.textButtonNotActive)}>
+                    Outros
+                </Text>
+            </TouchableOpacity>
+            </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    buttonNotActive: {
+        borderRadius: 4,
+        borderWidth: 1,
+        flex: 1,
+        alignSelf: "stretch",
+        height: 70,
+        justifyContent: "center",
+        borderColor: '#d6d7da',
+        backgroundColor: '#fff',
+    },
+    textButtonNotActive: {
+        fontSize: 20,
+        color: "black", 
+    },
+    buttonActive: {
+        flex: 1,
+        borderRadius: 4,
+        borderWidth: 0.5,
+        height: 80,
+        alignSelf: "stretch",
+        justifyContent: "center",
+        backgroundColor: 'green',
+        borderColor: '#d6d7da',
+    },
+    textButtonActive: {
+        fontSize: 20,
+        color: "white", 
+    }
+  });

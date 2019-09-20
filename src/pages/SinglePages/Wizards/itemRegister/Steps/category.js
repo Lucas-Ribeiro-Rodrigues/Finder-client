@@ -38,13 +38,13 @@ export default class Category extends Component{
                 selectedValue={this.state.selectedItemValue}
                 style={{height: 50}}
                 onValueChange={(itemValue, itemIndex) => {this.props.onValueChangeHandler(itemValue, itemIndex); this.setState({selectedItemValue: itemValue})}}>
-                    <Picker.Item label="Categoria" value="Categoria"/>
-                    <Picker.Item label="Eletrônico" value="Eletronico"/>
-                    <Picker.Item label="Documento" value="Documento"/>
+                    <Picker.Item label="Categoria" value="Category"/>
+                    <Picker.Item label="Eletrônico" value="Eletronic"/>
+                    <Picker.Item label="Documento" value="Document"/>
                     <Picker.Item label="Animal" value="Animal"/>
-                    <Picker.Item label="Vestuário" value="Vestuario"/>
-                    <Picker.Item label="Acessórios" value="Acessorios"/>
-                    <Picker.Item label="Cartões" value="Cartoes"/>
+                    <Picker.Item label="Vestuário" value="Clothing"/>
+                    <Picker.Item label="Acessórios" value="Acessories"/>
+                    <Picker.Item label="Cartões" value="Cards"/>
                     <Picker.Item label="Outros" value="Outros"/>
                 </Picker>
             </Item>

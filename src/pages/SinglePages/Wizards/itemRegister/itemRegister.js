@@ -15,11 +15,20 @@ export default class ItemRegister extends Component{
         super(props);
     }
 
-    state = {invalid:true, selectedItemValue: '', actualStep: 1};
+    state = {invalid:false, selectedItemValue: '', actualStep: 1, stepTitle: 'Categoria'};
 
-    static navigationOptions = {
-        header: null,
-    }
+    static navigationOptions = ({ navigation }) => {
+        const { state } = navigation;
+      
+        return {
+                headerTitle: <Text style={styles.titleText}>{state.params && state.params.stepTitle ? state.params.stepTitle : 'Categoria'}</Text>,
+                headerStyle: {
+                    backgroundColor: '#059F9F',
+                },
+                headerTintColor: '#FFF',
+                headerLeft:null,
+        };
+      };
 
     finish(wizardState){
     }
@@ -67,8 +76,8 @@ export default class ItemRegister extends Component{
             {name: 'StepThree', component: <StepThree/>},*/
           ];
         return(
-            <Container style={{flex: 1}}>
-                <Content contentContainerStyle={{flex: 1,  justifyContent: 'center', flexDirection: 'column', marginLeft: 15}}>
+            <Container contentContainerStyle={{flex: 1}}>
+                <Content contentContainerStyle={{flex: 1}}>
                     <MultiStep  
                             steps={steps} 
                             onFinish={this.finish}/>
@@ -106,6 +115,7 @@ const styles = StyleSheet.create({
     },
     buttonDisabled: {
         width: (SCREEN_WIDTH/2),
+        flexGrow: 2,
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#059494"
@@ -114,5 +124,10 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: "bold",
         color: "#e6e6e6",
+    },
+    titleText: {
+        fontSize: 20,
+        color: "white", 
+        fontWeight: "bold"
     }
 })

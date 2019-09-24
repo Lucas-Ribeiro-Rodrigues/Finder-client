@@ -13,10 +13,10 @@ export default class ItemRegister extends Component{
 
     constructor(props){
         super(props);
-        this.ActualStep =  Category;
+        this.ActualStep =  MultipleChoiceStepGenerator;
         this.actualQuestionName   = "Category";
-        this.actualQuestionOptions = null;
         this.stepContent = stepsJson[this.actualQuestionName];
+        this.actualQuestionOptions = Object.keys(this.stepContent);
     }
 
     state = {invalid:false, actualStep: -1, answers: {}};
@@ -25,7 +25,14 @@ export default class ItemRegister extends Component{
         const { state } = navigation;
 
         return {
-                headerTitle: <Text style={styles.titleText}>{state.params.stepLabel ? state.params.stepLabel : 'Categoria'}</Text>,
+                title: (state.params.stepLabel ? state.params.stepLabel : 'Categoria'),
+                headerLayoutPreset: 'center' | 'left',
+                headerTitleStyle: {
+                    flex: 1,
+                    textAlign: "center",
+                    alignSelf: "center",
+                    justifyContent: "center",
+                },
                 headerStyle: {
                     backgroundColor: '#059F9F',
                 },
@@ -65,9 +72,8 @@ export default class ItemRegister extends Component{
         this.handleNewAnswer(this.state.answers, this.actualQuestionName, this.step.state.selectedItemValue, this.state.actualStep++);
 
         let actualQuestion = this.getActualQuestion(this.questions, this.stepContent, this.category, this.actualQuestionName, this.state.actualStep);
-
         this.props.navigation.setParams({stepLabel: actualQuestion["Label"]});
-        console.log(this.state);
+        console.log(this.state.answers);
         if(actualQuestion["Type"] === "MultipleChoice")
         {
             this.actualQuestionOptions  = this.getQuestionOptions(actualQuestion, this.actualQuestionName);
@@ -90,7 +96,6 @@ export default class ItemRegister extends Component{
     }
 
     render(){
-
         return(
             <Container contentContainerStyle={{flex: 1}}>
                 <Content contentContainerStyle={{flex: 1}}>
@@ -140,8 +145,9 @@ const styles = StyleSheet.create({
         color: "#e6e6e6",
     },
     titleText: {
+        flex: 1,
         fontSize: 20,
-        alignSelf: "center",
+        alignContent: "center",
         color: "white", 
         fontWeight: "bold"
     }

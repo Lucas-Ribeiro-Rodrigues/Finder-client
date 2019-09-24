@@ -12,20 +12,20 @@ export default class Category extends Component{
         super(props);
     }
 
-    state = {selectedItemValue: '', activeButton: 0};
+    state = {selectedItemValue: 'Eletronic', activeButton: 0};
     
-    buttonPressHandler = (index) => {
-        this.setState({activeButton: index});
+    buttonPressHandler = (index, value) => {
+        this.setState({activeButton: index, selectedItemValue: value});
     }
+
     render()
     {
-        const {navigate} = this.props.navigation;
         const active = this.state.buttonActive;
         return(
-            <View>
+            <View style={{flex: 1}}>
             <TouchableOpacity 
                 style={this.state.activeButton == 0 ? styles.buttonActive:styles.buttonNotActive} 
-                onPress={() => {this.buttonPressHandler(0)}}>
+                onPress={() => {this.buttonPressHandler(0, "Eletronic")}}>
                 <Text 
                     style={(this.state.activeButton == 0 ? styles.textButtonActive:styles.textButtonNotActive)}>
                     Eletrônico
@@ -33,7 +33,7 @@ export default class Category extends Component{
             </TouchableOpacity>
             <TouchableOpacity 
                 style={this.state.activeButton == 1 ? styles.buttonActive:styles.buttonNotActive} 
-                onPress={() => {this.buttonPressHandler(1)}}>
+                onPress={() => {this.buttonPressHandler(1, "Document")}}>
                 <Text 
                     style={(this.state.activeButton == 1 ? styles.textButtonActive:styles.textButtonNotActive)}>
                     Documento
@@ -41,7 +41,7 @@ export default class Category extends Component{
             </TouchableOpacity>
             <TouchableOpacity 
                 style={this.state.activeButton == 2 ? styles.buttonActive:styles.buttonNotActive} 
-                onPress={() => {this.buttonPressHandler(2)}}>
+                onPress={() => {this.buttonPressHandler(2, "Animal")}}>
                 <Text 
                     style={(this.state.activeButton == 2 ? styles.textButtonActive:styles.textButtonNotActive)}>
                     Animal
@@ -49,7 +49,7 @@ export default class Category extends Component{
             </TouchableOpacity>
             <TouchableOpacity 
                 style={this.state.activeButton == 3 ? styles.buttonActive:styles.buttonNotActive} 
-                onPress={() => {this.buttonPressHandler(3)}}>
+                onPress={() => {this.buttonPressHandler(3, "Clothing")}}>
                 <Text 
                     style={(this.state.activeButton == 3 ? styles.textButtonActive:styles.textButtonNotActive)}>
                     Vestuário
@@ -57,7 +57,7 @@ export default class Category extends Component{
             </TouchableOpacity>
             <TouchableOpacity 
                 style={this.state.activeButton == 4 ? styles.buttonActive:styles.buttonNotActive} 
-                onPress={() => {this.buttonPressHandler(4)}}>
+                onPress={() => {this.buttonPressHandler(4, "Acessories")}}>
                 <Text 
                     style={(this.state.activeButton == 4 ? styles.textButtonActive:styles.textButtonNotActive)}>
                     Acessórios
@@ -65,7 +65,7 @@ export default class Category extends Component{
             </TouchableOpacity>
             <TouchableOpacity 
                 style={this.state.activeButton == 5 ? styles.buttonActive:styles.buttonNotActive} 
-                onPress={() => {this.buttonPressHandler(5)}}>
+                onPress={() => {this.buttonPressHandler(5, "Cards")}}>
                 <Text 
                     style={(this.state.activeButton == 5 ? styles.textButtonActive:styles.textButtonNotActive)}>
                     Cartões
@@ -73,7 +73,7 @@ export default class Category extends Component{
             </TouchableOpacity>
             <TouchableOpacity 
                 style={this.state.activeButton == 6 ? styles.buttonActive:styles.buttonNotActive} 
-                onPress={() => {this.buttonPressHandler(6)}}>
+                onPress={() => {this.buttonPressHandler(6, "Others")}}>
                 <Text 
                     style={(this.state.activeButton == 6 ? styles.textButtonActive:styles.textButtonNotActive)}>
                     Outros
@@ -86,11 +86,10 @@ export default class Category extends Component{
 
 const styles = StyleSheet.create({
     buttonNotActive: {
+        flex: 1,
         borderRadius: 4,
         borderWidth: 1,
-        flex: 1,
         alignSelf: "stretch",
-        height: 70,
         justifyContent: "center",
         borderColor: '#d6d7da',
         backgroundColor: '#fff',
@@ -103,7 +102,6 @@ const styles = StyleSheet.create({
         flex: 1,
         borderRadius: 4,
         borderWidth: 0.5,
-        height: 80,
         alignSelf: "stretch",
         justifyContent: "center",
         backgroundColor: 'green',

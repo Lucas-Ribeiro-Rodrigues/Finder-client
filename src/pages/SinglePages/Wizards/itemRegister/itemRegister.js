@@ -1,10 +1,10 @@
-import MultiStep from 'react-native-multistep-wizard';
-import React, { Component } from "react";
-import { View, StyleSheet, Dimensions, TouchableOpacity, Text } from 'react-native'
-import { Container, Content, Footer, Picker, Icon, Item, Label } from 'native-base';
-import Category from './Steps/category'
-/*import StepTwo from './StepTwo'
-import StepThree from './StepThree'*/
+import React, { Component }                                 from "react";
+import  { StyleSheet, Dimensions, TouchableOpacity, Text }  from 'react-native'
+import { Container, Content, Footer }                       from 'native-base';
+import Category                                             from './Steps/category';
+import MultipleChoiceStepGenerator                          from './Steps/multipleChoiceStepGenerator';
+import TextInputStepGenerator                               from './Steps/textInputStepGenerator';
+import stepsJson                                            from './stepsInfo.json';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -13,15 +13,19 @@ export default class ItemRegister extends Component{
 
     constructor(props){
         super(props);
+        this.ActualStep =  Category;
+        this.actualQuestionName   = "Category";
+        this.actualQuestionOptions = null;
+        this.stepContent = stepsJson[this.actualQuestionName];
     }
 
-    state = {invalid:false, selectedItemValue: '', actualStep: 1, stepTitle: 'Categoria'};
+    state = {invalid:false, actualStep: -1, answers: {}};
 
     static navigationOptions = ({ navigation }) => {
         const { state } = navigation;
-      
+
         return {
-                headerTitle: <Text style={styles.titleText}>{state.params && state.params.stepTitle ? state.params.stepTitle : 'Categoria'}</Text>,
+                headerTitle: <Text style={styles.titleText}>{state.params.stepLabel ? state.params.stepLabel : 'Categoria'}</Text>,
                 headerStyle: {
                     backgroundColor: '#059F9F',
                 },
@@ -30,14 +34,49 @@ export default class ItemRegister extends Component{
         };
       };
 
-    finish(wizardState){
+    handleNewAnswer = (answers, actualQuestionName, selectedItemValue, actualStep) => {
+        answers[actualQuestionName] = selectedItemValue;
+        this.setState({
+            actualStep: actualStep,
+            answers: answers
+        });
+    }
+
+    getActualQuestion(questions, stepContent, category, actualQuestionName, actualStep){
+        if(!questions) // questions == undefined
+        {
+            questions = stepContent[category];
+        }
+        this.actualQuestionName = Object.keys(questions)[actualStep];
+        this.setState({actualStep: actualStep});
+        return questions[this.actualQuestionName];
+    }
+
+    getQuestionOptions(actualQuestion, actualQuestionName)
+    {
+        return actualQuestion["Options"];
     }
 
     nextPreprocess = () => {
-        this.stepProps.saveState(0,{category:this.props.selectedItemValue});
-        let actualStep = this.state.actualStep++;
-        this.setState({actualStep: actualStep});
-        this.stepProps.nextFn();
+        if(!this.category)
+            this.category = this.step.state.selectedItemValue;
+
+        
+        this.handleNewAnswer(this.state.answers, this.actualQuestionName, this.step.state.selectedItemValue, this.state.actualStep++);
+
+        let actualQuestion = this.getActualQuestion(this.questions, this.stepContent, this.category, this.actualQuestionName, this.state.actualStep);
+
+        this.props.navigation.setParams({stepLabel: actualQuestion["Label"]});
+        console.log(this.state);
+        if(actualQuestion["Type"] === "MultipleChoice")
+        {
+            this.actualQuestionOptions  = this.getQuestionOptions(actualQuestion, this.actualQuestionName);
+            this.ActualStep = MultipleChoiceStepGenerator;
+        }
+        else
+        {
+            this.ActualStep = TextInputStepGenerator;
+        }
     }
 
     backButtonHandler = () => {
@@ -50,37 +89,12 @@ export default class ItemRegister extends Component{
                     ], {cancelable: true});
     }
 
-    onValueChangeHandler = (itemValue, itemIndex) => {
-        let invalid;
-        if(itemIndex > 0)
-        {
-            invalid = false;
-        }
-        else
-        {
-            invalid = true;
-        }
-
-        this.setState({selectedItemValue: itemValue, invalid: invalid});
-    }
-
     render(){
 
-        const steps = [
-            {name: 'Category', component: <Category 
-                                                    navigation = {this.props.navigation} 
-                                                    ref={e => this.stepProps = e.props} 
-                                                    onValueChangeHandler={this.onValueChangeHandler} 
-                                                    selectedItemValue={this.state.selectedItemValue}/>},
-            /*{name: 'StepTwo', component: <StepTwo/>},
-            {name: 'StepThree', component: <StepThree/>},*/
-          ];
         return(
             <Container contentContainerStyle={{flex: 1}}>
                 <Content contentContainerStyle={{flex: 1}}>
-                    <MultiStep  
-                            steps={steps} 
-                            onFinish={this.finish}/>
+                    <this.ActualStep ref={e => this.step = e} options={this.actualQuestionOptions}/>
                 </Content>
                 <Footer style={{backgroundColor: "#059F9F", flexDirection: "row", justifyContent: "flex-start"}}>
                     <TouchableOpacity 
@@ -92,9 +106,9 @@ export default class ItemRegister extends Component{
                     <TouchableOpacity 
                                     onPress={this.nextPreprocess}
                                     disabled={this.state.invalid}
-                                    style={(!this.state.invalid ? styles.buttonEnabled: styles.buttonDisabled)}
+                                    style={styles.buttonEnabled}
                                     ref={e => this.buttonNext = e}>
-                        <Text style={(!this.state.invalid ? styles.buttonEnabledText: styles.buttonDisabledText)}>Próximo</Text>
+                        <Text style={styles.buttonEnabledText}>Próximo</Text>
                     </TouchableOpacity>
                 </Footer>
             </Container>
@@ -127,6 +141,7 @@ const styles = StyleSheet.create({
     },
     titleText: {
         fontSize: 20,
+        alignSelf: "center",
         color: "white", 
         fontWeight: "bold"
     }

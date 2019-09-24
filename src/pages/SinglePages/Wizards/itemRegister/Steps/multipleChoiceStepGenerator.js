@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import TouchableList      from '../../../../../components/multipleChoiceStep/TouchableList';
+
 export default class MultipleChoiceStepGenerator extends Component{
 
     state = {selectedItemValue: this.props.options[0], activeButton: 0}
-    
+
     onButtonPressHandler = (index, value) => 
     {
         this.setState({
@@ -12,6 +13,12 @@ export default class MultipleChoiceStepGenerator extends Component{
         })
     }
 
+    componentDidUpdate()
+    {
+        if(this.state.selectedItemValue != this.props.options[0]) //previnir loop
+            this.setState({selectedItemValue: this.props.options[0]});
+    }
+    
     render()
     {
         return(

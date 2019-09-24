@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     textButtonNotActive: {
+        paddingLeft: 10, 
         fontSize: 20,
         color: "black", 
     },
@@ -41,6 +42,7 @@ const styles = StyleSheet.create({
         borderColor: '#d6d7da',
     },
     textButtonActive: {
+        paddingLeft: 10,
         fontSize: 20,
         color: "white", 
     }

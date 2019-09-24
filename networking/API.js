@@ -14,6 +14,10 @@ const userLogin = (email, pass)  => {
         .then(response => response.data)
 }
 
+const getUserData = (email) => {
+    return axios.get('')
+} 
+
 module.exports = {
     postUser,
     userLogin

@@ -15,7 +15,8 @@ const userLogin = (email, pass)  => {
 }
 
 const getUserData = (email) => {
-    return axios.get('')
+    return axios.get('/users-management/user/'+email)
+        .then(response => response.data)
 } 
 
 module.exports = {

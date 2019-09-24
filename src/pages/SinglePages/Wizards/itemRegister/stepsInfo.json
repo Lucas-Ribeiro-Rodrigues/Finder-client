@@ -1,0 +1,216 @@
+{
+    "Category": {
+        "Eletronic":{
+            "Subcategory":{
+                "Type": "MultipleChoice",
+                "Options":[
+                    "Celular",
+                    "Notebook",
+                    "Fone",
+                    "Cabos"
+                ],
+                "Required": true,
+                "Label": "Subcategoria"
+            },
+            "Brand": {
+                "Type": "TextInput",
+                "Required": true,
+                "Label": "Marca"
+            },
+            "Model": {
+                "Type": "TextInput",
+                "Required": false,
+                "Label": "Modelo"
+            },
+            "PrimaryColor": {
+                "Type": "MultipleChoice",
+                "Options":[
+                    "Preto",
+                    "Branco",
+                    "Vermelho",
+                    "Verde",
+                    "Azul",
+                    "Amarelo",
+                    "Cinza"
+                    ],
+                "Required": true,
+                "Label": "Cor Primária"
+            },
+            "SecondaryColor": {
+                "Type": "MultipleChoice",
+                "Options":[
+                    "Preto",
+                    "Branco",
+                    "Vermelho",
+                    "Verde",
+                    "Azul",
+                    "Amarelo",
+                    "Cinza"
+                ],
+                "Required": false,
+                "Label": "Cor Secundária"
+            },
+            "SerialNumber": {
+                "Type": "TextInput",
+                "Required": false,
+                "Label": "Numero de serie"
+            },
+            "Label": "Eletrônico"
+        },
+        "Document": {
+            "Subcategory":{
+                "Type": "MultipleChoice",
+                "Options":[
+                    "RG",
+                    "CNH",
+                    "CPF",
+                    "Passaporte"
+                ],
+                "Required": true,
+                "Label": "Subcategoria"
+            },
+            "FullName": {
+                "Type": "TextInput",
+                "Required": true,
+                "Label": "Nome Completo"
+            },
+            "Number": {
+                "Type": "TextInput",
+                "Required": false,
+                "Label": "Número"
+            },
+            "Label": "Documento"
+        },
+        "Animal": {
+            "Subcategory": {
+                "Type": "MultipleChoice",
+                "Options":[
+                    "Cachorro",
+                    "Gato",
+                    "Coelho"
+                ],
+                "Label": "Subcategoria",
+                "Required": true
+            },
+            "Breed": {
+                "Type": "TextInput",
+                "Required": true,
+                "Label": "Raça"
+            },
+            "Label": "Animal"
+        },
+        "Clothing": {
+            "Subcategory": {
+                "Type": "MultipleChoice",
+                "Options":[
+                    "Camiseta",
+                    "Camisa",
+                    "Jaqueta",
+                    "Bermuda",
+                    "Calça",
+                    "Meia",
+                    "Tênis",
+                    "Chinelo",
+                    "Sapato"
+                ],
+                "Required": true,
+                "Label": "Subcategoria"
+            },
+            "Brand": {
+                "Type": "TextInput",
+                "Required": false,
+                "Label": "Marca"
+            },
+            "PrimaryColor": {
+                "Type": "MultipleChoice",
+                "Options":[
+                    "Preto",
+                    "Branco",
+                    "Vermelho",
+                    "Verde",
+                    "Azul",
+                    "Amarelo",
+                    "Cinza"
+                    ],
+                "Required": true,
+                "Label": "Cor Primária"
+            },
+            "SecondaryColor": {
+                "Type": "MultipleChoice",
+                "Options":[
+                    "Preto",
+                    "Branco",
+                    "Vermelho",
+                    "Verde",
+                    "Azul",
+                    "Amarelo",
+                    "Cinza"
+                ],
+                "Required": false,
+                "Label": "Cor Secundária"
+            },
+            "Label": "Vestuário"
+        },
+        "Acessories": {
+            "Subcategory": {
+                "Type": "MultipleChoice",
+                "Options": [
+                    "Relógio",
+                    "Pulseira",
+                    "Brinco",
+                    "Óculos",
+                    "Colar"
+                ],
+                "Required": true,
+                "Label": "Subcategoria"
+            },
+            "PrimaryColor": {
+                "Type": "MultipleChoice",
+                "Options":[
+                    "Preto",
+                    "Branco",
+                    "Vermelho",
+                    "Verde",
+                    "Azul",
+                    "Amarelo",
+                    "Cinza",
+                    "Dourado",
+                    "Prateado"
+                    ],
+                "Required": true,
+                "Label": "Cor Primária"
+            },
+            "SecondaryColor": {
+                "Type": "MultipleChoice",
+                "Options":[
+                    "Preto",
+                    "Branco",
+                    "Vermelho",
+                    "Verde",
+                    "Azul",
+                    "Amarelo",
+                    "Cinza",
+                    "Dourado",
+                    "Prateado"
+                ],
+                "Required": false,
+                "Label": "Cor Secundária"
+            },
+            "Label": "Acessórios"
+        },
+        "Cards": {
+            "Subcategory": {
+                "Type": "MultipleChoice",
+                "Options": [
+                    "Cartão de banco",
+                    "Vale Refeição",
+                    "Vale Transporte",
+                    "Passe de ônibus"
+                ],
+                "Required": true,
+                "Label": "Subcategoria"
+            },
+            "Label": "Cartões"
+        }
+    }
+}

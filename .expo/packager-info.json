@@ -1,10 +1,10 @@
 {
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 10900,
-  "expoServerNgrokUrl": "https://ef-suz.anonymous.finder-client.exp.direct",
-  "packagerNgrokUrl": "https://packager.ef-suz.anonymous.finder-client.exp.direct",
-  "ngrokPid": 8672,
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "devToolsPort": 19002,
   "webpackServerPort": null
 }

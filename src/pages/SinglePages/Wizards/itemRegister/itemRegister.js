@@ -73,6 +73,7 @@ export default class ItemRegister extends Component{
 
         let actualQuestion = this.getActualQuestion(this.questions, this.stepContent, this.category, this.actualQuestionName, this.state.actualStep);
         this.props.navigation.setParams({stepLabel: actualQuestion["Label"]});
+        console.log(this.state.answers);
         if(actualQuestion["Type"] === "MultipleChoice")
         {
             this.actualQuestionOptions  = this.getQuestionOptions(actualQuestion, this.actualQuestionName);

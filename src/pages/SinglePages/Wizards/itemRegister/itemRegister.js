@@ -3,6 +3,7 @@ import { StyleSheet, Dimensions, TouchableOpacity, Text, Alert }    from 'react-
 import { Container, Content, Footer }                               from 'native-base';
 import MultipleChoiceStepGenerator                                  from './Steps/multipleChoiceStepGenerator';
 import TextInputStepGenerator                                       from './Steps/textInputStepGenerator';
+import ImagePickerStepGenerator                                     from './Steps/imagePickerStepGenerator';
 import stepsJson                                                    from './stepsInfo.json';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -15,13 +16,26 @@ export default class ItemRegister extends Component{
         this.initAttributes();
     }
 
+    initOptions()
+    {
+        this.categories = [];
+        let ret = [];
+        let objectNames = Object.keys(this.stepContent);
+        for(const name of objectNames)
+        {
+            ret.push(this.stepContent[name]["Label"]);
+            this.categories[this.stepContent[name]["Label"]] = name;
+        }
+        return ret;
+    }
+
     initAttributes()
     {
         this.ActualStep             =  MultipleChoiceStepGenerator;
         this.actualQuestionName     = "Category";
         this.stepLabel              = "Categoria"
         this.stepContent            = stepsJson[this.actualQuestionName];
-        this.actualQuestionOptions  = Object.keys(this.stepContent);
+        this.actualQuestionOptions  = this.initOptions();
         this.steps                  = [{
             "Type"      :   "MultipleChoice",
             "Options"   :   this.actualQuestionOptions,
@@ -64,9 +78,18 @@ export default class ItemRegister extends Component{
     addGenericQuestions()
     {
         let genericQuestions = {};
+
         genericQuestions["Details"] = {
             "Type"  : "TextArea",
             "Label" : "Detalhes"
+        }
+        genericQuestions["Image"] = {
+            "Type"  : "ImagePicker",
+            "Label" : "Foto"
+        }
+        genericQuestions["Location"] = {
+            "Type"  : "MapLocation",
+            "Label" : "Local onde perdeu"
         }
 
         this.questions = Object.assign(this.questions, genericQuestions);
@@ -75,6 +98,7 @@ export default class ItemRegister extends Component{
     getActualQuestion(stepContent, category, actualStep){
         if(!this.questions) // questions == undefined
         {
+            console.log(category)
             this.questions = stepContent[category];
             this.addGenericQuestions();
             delete this.questions["Label"];
@@ -91,7 +115,7 @@ export default class ItemRegister extends Component{
 
     nextPreprocess = () => {
         if(!this.category)
-            this.category = this.step.state.value;
+            this.category = this.categories[this.step.state.value];
 
         this.handleNewAnswer(this.state.answers, this.actualQuestionName, this.step.state.value, this.state.actualStep++);
 
@@ -115,6 +139,11 @@ export default class ItemRegister extends Component{
             case "TextArea": {
                 this.ActualStep = TextInputStepGenerator;
                 this.isTextArea = true;
+                break;
+            }
+            case "ImagePicker": {
+                this.ActualStep = ImagePickerStepGenerator;
+                break;
             }
         }
 
@@ -161,6 +190,9 @@ export default class ItemRegister extends Component{
                 case "TextArea": {
                     this.ActualStep = TextInputStepGenerator;
                     this.isTextArea = true;
+                }
+                case "ImagePicker": {
+                    this.ActualStep = ImagePickerStepGenerator;
                 }
             }
             this.stepLabel = actualStepObj["Label"];

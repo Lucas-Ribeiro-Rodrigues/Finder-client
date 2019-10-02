@@ -4,6 +4,7 @@ import { Container, Content, Footer }                               from 'native
 import MultipleChoiceStepGenerator                                  from './Steps/multipleChoiceStepGenerator';
 import TextInputStepGenerator                                       from './Steps/textInputStepGenerator';
 import ImagePickerStepGenerator                                     from './Steps/imagePickerStepGenerator';
+import MapLocationStepGenerator                                     from './Steps/mapLocationStepGenerator';
 import stepsJson                                                    from './stepsInfo.json';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -45,7 +46,7 @@ export default class ItemRegister extends Component{
         this.stepUtils = { options : this.actualQuestionOptions }
     }
 
-    state = {invalid:false, actualStep: -1, answers: {}};
+    state = {invalid:false, actualStep: -1, answers: {}, isLastStep: false};
 
     static navigationOptions = ({ navigation }) => {
         const { state } = navigation;
@@ -115,6 +116,10 @@ export default class ItemRegister extends Component{
     nextPreprocess = () => {
         if(!this.category)
             this.category = this.categories[this.step.state.value];
+        
+        /*if(this.questions)
+            if(Object.keys(this.questions).length-- == this.state.actualStep)
+                this.setState({isLastStep: true});*/
 
         this.handleNewAnswer(this.state.answers, this.actualQuestionName, this.step.state.value, this.state.actualStep++);
 
@@ -143,6 +148,10 @@ export default class ItemRegister extends Component{
             }
             case "ImagePicker": {
                 this.ActualStep = ImagePickerStepGenerator;
+                break;
+            }
+            case "MapLocation": {
+                this.ActualStep = MapLocationStepGenerator;
                 break;
             }
         }
@@ -190,9 +199,15 @@ export default class ItemRegister extends Component{
                 case "TextArea": {
                     this.ActualStep = TextInputStepGenerator;
                     this.stepUtils["isTextArea"] = true;
+                    break;
                 }
                 case "ImagePicker": {
                     this.ActualStep = ImagePickerStepGenerator;
+                    break;
+                }
+                case "MapLocation": {
+                    this.ActualStep = MapLocationStepGenerator;
+                    break;
                 }
             }
             this.stepLabel = actualStepObj["Label"];
@@ -203,19 +218,28 @@ export default class ItemRegister extends Component{
 
             this.actualQuestionName = actualStepObj["Name"];
             this.props.navigation.setParams({stepLabel: this.stepLabel});
-            this.setState({actualStep: actualStep, answers: answers});
+
+            let isLastStep = this.state.isLastStep;
+            if(isLastStep)
+                isLastStep = !isLastStep;
+
+            this.setState({actualStep: actualStep, answers: answers, isLastStep: isLastStep});
         }
     }
 
+    onFinish()
+    {
+        console.log(this.state.answers);
+    }
+
     render(){
+        let {isLastStep} = this.state;
         return(
             <Container contentContainerStyle={{flex: 1}}>
                 <Content contentContainerStyle={{flex: 1}}>
                     <this.ActualStep 
                         ref     ={e => this.step = e} 
-                        utils   =   {this.stepUtils}
-                        /*options     ={this.actualQuestionOptions}
-                        isTextArea  ={this.isTextArea}*//>
+                        utils   =   {this.stepUtils}/>
                 </Content>
                 <Footer style={{backgroundColor: "#059F9F", flexDirection: "row", justifyContent: "flex-start"}}>
                     <TouchableOpacity 
@@ -225,11 +249,11 @@ export default class ItemRegister extends Component{
                         <Text style={styles.buttonEnabledText}>Voltar</Text>
                     </TouchableOpacity>
                     <TouchableOpacity 
-                                    onPress={this.nextPreprocess}
+                                    onPress={isLastStep ? this.onFinish : this.nextPreprocess}
                                     disabled={this.state.invalid}
                                     style={styles.buttonEnabled}
                                     ref={e => this.buttonNext = e}>
-                        <Text style={styles.buttonEnabledText}>Próximo</Text>
+                        <Text style={styles.buttonEnabledText}>{isLastStep ? 'Enviar' : 'Próximo'}</Text>
                     </TouchableOpacity>
                 </Footer>
             </Container>

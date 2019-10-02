@@ -42,7 +42,7 @@ export default class ItemRegister extends Component{
             "Label"     :   this.stepLabel,
             "Name"      :   this.actualQuestionName,
         }];
-        this.isTextArea             = false;
+        this.stepUtils = { options : this.actualQuestionOptions }
     }
 
     state = {invalid:false, actualStep: -1, answers: {}};
@@ -98,7 +98,6 @@ export default class ItemRegister extends Component{
     getActualQuestion(stepContent, category, actualStep){
         if(!this.questions) // questions == undefined
         {
-            console.log(category)
             this.questions = stepContent[category];
             this.addGenericQuestions();
             delete this.questions["Label"];
@@ -121,24 +120,25 @@ export default class ItemRegister extends Component{
 
         let actualQuestion = this.getActualQuestion(this.stepContent, this.category, this.state.actualStep);
         
-        this.stepLabel = actualQuestion["Label"]
+        this.stepLabel = actualQuestion["Label"];
+        this.stepUtils = {};
         this.props.navigation.setParams({stepLabel: this.stepLabel});
-
         switch(actualQuestion["Type"])
         {
             case "MultipleChoice": {
                 this.ActualStep = MultipleChoiceStepGenerator;
-                this.actualQuestionOptions  = this.getQuestionOptions(actualQuestion, this.actualQuestionName);
+                this.actualQuestionOptions  =   this.getQuestionOptions(actualQuestion, this.actualQuestionName);
+                this.stepUtils["options"]   =   this.actualQuestionOptions;    
                 break;
             }
             case "TextInput": {
                 this.ActualStep = TextInputStepGenerator;
-                this.isTextArea = false;
+                this.stepUtils["isTextArea"] = false;
                 break;
             }
             case "TextArea": {
                 this.ActualStep = TextInputStepGenerator;
-                this.isTextArea = true;
+                this.stepUtils["isTextArea"] = true;
                 break;
             }
             case "ImagePicker": {
@@ -146,14 +146,13 @@ export default class ItemRegister extends Component{
                 break;
             }
         }
-
         actualQuestion["Name"] = this.actualQuestionName;
         this.steps.push(actualQuestion);
     }
 
     backButtonHandler = () => {
         this.steps.pop();
-
+        this.stepUtils = undefined;
         if(this.steps.length === 0)
         {
             const {navigate} = this.props.navigation;
@@ -180,16 +179,17 @@ export default class ItemRegister extends Component{
             {
                 case "MultipleChoice": {
                     this.ActualStep = MultipleChoiceStepGenerator;
+                    this.stepUtils["options"]   =   actualStepObj["Options"];  
                     break;
                 }
                 case "TextInput": {
                     this.ActualStep = TextInputStepGenerator;
-                    this.isTextArea = false;
+                    this.stepUtils["isTextArea"] = false;
                     break;
                 }
                 case "TextArea": {
                     this.ActualStep = TextInputStepGenerator;
-                    this.isTextArea = true;
+                    this.stepUtils["isTextArea"] = true;
                 }
                 case "ImagePicker": {
                     this.ActualStep = ImagePickerStepGenerator;
@@ -212,9 +212,10 @@ export default class ItemRegister extends Component{
             <Container contentContainerStyle={{flex: 1}}>
                 <Content contentContainerStyle={{flex: 1}}>
                     <this.ActualStep 
-                        ref         ={e => this.step = e} 
-                        options     ={this.actualQuestionOptions}
-                        isTextArea  ={this.isTextArea}/>
+                        ref     ={e => this.step = e} 
+                        utils   =   {this.stepUtils}
+                        /*options     ={this.actualQuestionOptions}
+                        isTextArea  ={this.isTextArea}*//>
                 </Content>
                 <Footer style={{backgroundColor: "#059F9F", flexDirection: "row", justifyContent: "flex-start"}}>
                     <TouchableOpacity 

@@ -3,7 +3,7 @@ import TouchableList      from '../../../../../components/multipleChoiceStep/Tou
 
 export default class MultipleChoiceStepGenerator extends Component{
 
-    state = {value: this.props.options[0], activeButton: 0}
+    state = {value: this.props.utils.options[0], activeButton: 0}
 
     onButtonPressHandler = (index, value) => 
     {
@@ -15,8 +15,8 @@ export default class MultipleChoiceStepGenerator extends Component{
 
     componentDidUpdate(prevProps)
     {
-        if(this.state.value != this.props.options[0] && this.props != prevProps) //previnir loop
-            this.setState({value: this.props.options[0], activeButton: 0});
+        if(this.state.value != this.props.utils.options[0] && this.props != prevProps) //previnir loop
+            this.setState({value: this.props.utils.options[0], activeButton: 0});
     }
     
     render()
@@ -24,7 +24,7 @@ export default class MultipleChoiceStepGenerator extends Component{
         return(
             <TouchableList 
                 onPressHandler={this.onButtonPressHandler} 
-                options={this.props.options}
+                options={this.props.utils.options}
                 activeButton={this.state.activeButton}/>
         )
     }

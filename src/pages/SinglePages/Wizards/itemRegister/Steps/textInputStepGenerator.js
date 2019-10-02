@@ -24,7 +24,7 @@ export default class TextInputStepGenerator extends Component{
     {
         if(prevProps != this.props)
         {
-            if(this.props.isTextArea)
+            if(this.props.utils.isTextArea)
             {
                 this.multiline      = true;
                 this.numberOfLines  = 10;
@@ -48,7 +48,7 @@ export default class TextInputStepGenerator extends Component{
                     numberOfLines   = {this.numberOfLines}
                     ref             = {e => this.textInput = e}
                     onChangeText    = {this.onValueChangeHandler}
-                    style           = {(!this.props.isTextArea ? styles.TextInput: {...styles.TextInput,...styles.TextArea})}
+                    style           = {(!this.props.utils.isTextArea ? styles.TextInput: {...styles.TextInput,...styles.TextArea})}
                     autoCorrect     = {false}/>
             </View>
         )

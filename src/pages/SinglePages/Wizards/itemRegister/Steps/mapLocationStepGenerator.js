@@ -18,9 +18,9 @@ export default class MapLocationStepGenerator extends Component{
                         latitudeDelta: 0.0143,
                         longitudeDelta: 0.0134,
                     },
-                    markerLocation: {
-                        latitude: latitude, 
-                        longitude: longitude
+                    value: {
+                        latitude, 
+                        longitude
                     }
                 })
             }, //success
@@ -35,7 +35,7 @@ export default class MapLocationStepGenerator extends Component{
     }
     render()
     {
-        let { region, markerLocation } = this.state;
+        let { region, value } = this.state;
         return(
             <MapView
                 style={{flex:1
@@ -46,7 +46,7 @@ export default class MapLocationStepGenerator extends Component{
             >
                 <MapView.Marker 
                     draggable
-                    coordinate={(markerLocation ? markerLocation: {latitude: 0, longitude: 0})}
+                    coordinate={(value ? value: {latitude: 0, longitude: 0})}
                     onDragEnd={e => this.setState({value: e.nativeEvent.coordinate})}
                 />
             </MapView>

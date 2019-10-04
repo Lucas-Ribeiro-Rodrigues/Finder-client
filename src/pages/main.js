@@ -57,10 +57,10 @@ export default class Main extends Component{
                 <Icon 
                     type="FontAwesome" 
                     name="plus"/>
-                {this.state.active? <Button style={{ backgroundColor: '#1f8686' }} onPress={() => navigate('ItemRegister', {navigation: this.props.navigation})}>
+                {this.state.active? <Button style={{ backgroundColor: '#1f8686' }} onPress={() => navigate('ItemRegister', {navigation: this.props.navigation, situation: "Found"})}>
                     <Icon name="ios-happy"/>
                 </Button>:null}
-                {this.state.active? <Button style={{ backgroundColor: '#1f8686' }} onPress={() => navigate('ItemRegister', {navigation: this.props.navigation})}>
+                {this.state.active? <Button style={{ backgroundColor: '#1f8686' }} onPress={() => navigate('ItemRegister', {navigation: this.props.navigation, situation: "Lost"})}>
                     <Icon name="md-search"/>
                 </Button>:null}
             </Fab>

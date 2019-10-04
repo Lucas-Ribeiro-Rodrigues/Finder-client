@@ -12,9 +12,18 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 export default class ItemRegister extends Component{
 
+    state = {invalid:false, actualStep: -1, answers: {}, isLastStep: false};
+
     constructor(props){
         super(props);
         this.initAttributes();
+    }
+
+    componentDidMount()
+    {
+        let {answers} = this.state;
+        answers["Situation"] = this.props.navigation.state.params.situation;
+        this.setState({answers: answers});
     }
 
     initOptions()
@@ -45,8 +54,6 @@ export default class ItemRegister extends Component{
         }];
         this.stepUtils = { options : this.actualQuestionOptions }
     }
-
-    state = {invalid:false, actualStep: -1, answers: {}, isLastStep: false};
 
     static navigationOptions = ({ navigation }) => {
         const { state } = navigation;
@@ -102,8 +109,9 @@ export default class ItemRegister extends Component{
             this.questions = stepContent[category];
             this.addGenericQuestions();
             delete this.questions["Label"];
+            this.questionsLabel = Object.keys(this.questions);
         }
-        this.actualQuestionName = Object.keys(this.questions)[actualStep];
+        this.actualQuestionName = this.questionsLabel[actualStep];
         this.setState({actualStep: actualStep});
         return this.questions[this.actualQuestionName];
     }
@@ -117,9 +125,9 @@ export default class ItemRegister extends Component{
         if(!this.category)
             this.category = this.categories[this.step.state.value];
         
-        /*if(this.questions)
-            if(Object.keys(this.questions).length-- == this.state.actualStep)
-                this.setState({isLastStep: true});*/
+        if(this.questionsLabel)
+            if(this.questionsLabel.length - 2 == this.state.actualStep)
+                this.setState({isLastStep: true});
 
         this.handleNewAnswer(this.state.answers, this.actualQuestionName, this.step.state.value, this.state.actualStep++);
 
@@ -227,32 +235,34 @@ export default class ItemRegister extends Component{
         }
     }
 
-    onFinish()
+    onFinish = () =>
     {
-        console.log(this.state.answers);
+        this.handleNewAnswer(this.state.answers, this.actualQuestionName, this.step.state.value, this.state.actualStep)
     }
 
     render(){
         let {isLastStep} = this.state;
+        console.log(this.state.answers);
         return(
             <Container contentContainerStyle={{flex: 1}}>
                 <Content contentContainerStyle={{flex: 1}}>
                     <this.ActualStep 
-                        ref     ={e => this.step = e} 
+                        ref     =   {e => this.step = e} 
                         utils   =   {this.stepUtils}/>
                 </Content>
-                <Footer style={{backgroundColor: "#059F9F", flexDirection: "row", justifyContent: "flex-start"}}>
+                <Footer 
+                    style={{backgroundColor: "#059F9F", flexDirection: "row", justifyContent: "flex-start"}}>
                     <TouchableOpacity 
-                                    onPress={this.backButtonHandler}
-                                    color="#059F9F"
-                                    style={styles.buttonEnabled}>
+                        onPress =   {this.backButtonHandler}
+                        color   =   "#059F9F"
+                        style   =   {styles.buttonEnabled}>
                         <Text style={styles.buttonEnabledText}>Voltar</Text>
                     </TouchableOpacity>
                     <TouchableOpacity 
-                                    onPress={isLastStep ? this.onFinish : this.nextPreprocess}
-                                    disabled={this.state.invalid}
-                                    style={styles.buttonEnabled}
-                                    ref={e => this.buttonNext = e}>
+                        onPress =   {isLastStep ? this.onFinish : this.nextPreprocess}
+                        disabled=   {this.state.invalid}
+                        style   =   {styles.buttonEnabled}
+                        ref     =   {e => this.buttonNext = e}>
                         <Text style={styles.buttonEnabledText}>{isLastStep ? 'Enviar' : 'Próximo'}</Text>
                     </TouchableOpacity>
                 </Footer>

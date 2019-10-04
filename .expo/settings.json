@@ -1,6 +1,6 @@
 {
   "urlRandomness": "ef-suz",
-  "hostType": "lan",
+  "hostType": "tunnel",
   "lanType": "ip",
   "dev": true,
   "minify": false,

@@ -1,18 +1,18 @@
-import React, { Component }                                         from "react";
-import { StyleSheet, Dimensions, TouchableOpacity, Text, Alert }    from 'react-native'
-import { Container, Content, Footer }                               from 'native-base';
-import MultipleChoiceStepGenerator                                  from './Steps/multipleChoiceStepGenerator';
-import TextInputStepGenerator                                       from './Steps/textInputStepGenerator';
-import ImagePickerStepGenerator                                     from './Steps/imagePickerStepGenerator';
-import MapLocationStepGenerator                                     from './Steps/mapLocationStepGenerator';
-import stepsJson                                                    from './stepsInfo.json';
+import React, { Component }                                                 from "react";
+import { StyleSheet, Dimensions, TouchableOpacity, Text, Alert, Animated }  from 'react-native'
+import { Container, Content, Footer }                                       from 'native-base';
+import MultipleChoiceStepGenerator                                          from './Steps/multipleChoiceStepGenerator';
+import TextInputStepGenerator                                               from './Steps/textInputStepGenerator';
+import ImagePickerStepGenerator                                             from './Steps/imagePickerStepGenerator';
+import MapLocationStepGenerator                                             from './Steps/mapLocationStepGenerator';
+import stepsJson                                                            from './stepsInfo.json';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 export default class ItemRegister extends Component{
 
-    state = {invalid:false, actualStep: -1, answers: {}, isLastStep: false};
+    state = {invalid:false, actualStep: -1, answers: {}, isLastStep: false, x: new Animated.Value(0)};
 
     constructor(props){
         super(props);
@@ -121,6 +121,20 @@ export default class ItemRegister extends Component{
         return actualQuestion["Options"];
     }
 
+    AnimateNextTransition()
+    {
+        let {x} = this.state;
+        Animated.spring(x, {
+            toValue: -SCREEN_WIDTH
+        }).start();
+
+        x = SCREEN_WIDTH;
+
+        Animated.spring(x, {
+            toValue: 0,
+        }).start();
+    }
+
     nextPreprocess = () => {
         if(!this.category)
             this.category = this.categories[this.step.state.value];
@@ -128,7 +142,8 @@ export default class ItemRegister extends Component{
         if(this.questionsLabel)
             if(this.questionsLabel.length - 2 == this.state.actualStep)
                 this.setState({isLastStep: true});
-
+        
+        this.AnimateNextTransition();
         this.handleNewAnswer(this.state.answers, this.actualQuestionName, this.step.state.value, this.state.actualStep++);
 
         let actualQuestion = this.getActualQuestion(this.stepContent, this.category, this.state.actualStep);
@@ -242,13 +257,21 @@ export default class ItemRegister extends Component{
 
     render(){
         let {isLastStep} = this.state;
-        console.log(this.state.answers);
         return(
             <Container contentContainerStyle={{flex: 1}}>
                 <Content contentContainerStyle={{flex: 1}}>
-                    <this.ActualStep 
-                        ref     =   {e => this.step = e} 
-                        utils   =   {this.stepUtils}/>
+                    <Animated.View
+                        style={[{flex: 1}, {
+                            transform: [
+                              {
+                                translateX: this.state.x
+                              }
+                            ]
+                          }]}>
+                        <this.ActualStep 
+                            ref     =   {e => this.step = e} 
+                            utils   =   {this.stepUtils}/>
+                    </Animated.View>
                 </Content>
                 <Footer 
                     style={{backgroundColor: "#059F9F", flexDirection: "row", justifyContent: "flex-start"}}>

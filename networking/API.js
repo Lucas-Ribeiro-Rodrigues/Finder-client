@@ -19,7 +19,18 @@ const getUserData = (email) => {
         .then(response => response.data)
 } 
 
+const postItem = (item) => {
+    return axios.post('/items-management/item-register', item)
+        .then(response => response.data)
+}
+
+const getItems = (situation) => {
+    return axios.get(`/items-management/items/${situation}`)
+        .then(response => response.data)
+}
 module.exports = {
     postUser,
-    userLogin
+    userLogin,
+    postItem,
+    getItems
 }

@@ -8,6 +8,16 @@ export default class ImagePickerStepGenerator extends Component{
 
     state = {value: null, image: undefined};
 
+    constructor(props)
+    {
+        super(props);
+    }
+
+    componentDidMount(prevProps)
+    {
+        this.props.animateSlideIn();
+    }
+
     launchImageLibrary = async() =>
     {
         let result = await ImagePicker.launchImageLibraryAsync({

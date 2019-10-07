@@ -30,8 +30,9 @@ export default class MapLocationStepGenerator extends Component{
                 enableHighAccuracy : true,
                 maximumAge : 1000
             }
-
-        )
+            
+        );
+        this.props.animateSlideIn();
     }
     render()
     {

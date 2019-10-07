@@ -22,7 +22,7 @@ export default class TextInputStepGenerator extends Component{
 
     componentDidUpdate(prevProps)
     {
-        if(prevProps != this.props)
+        if(prevProps.utils != this.props.utils)
         {
             if(this.props.utils.isTextArea)
             {
@@ -34,6 +34,7 @@ export default class TextInputStepGenerator extends Component{
                 this.multiline      = false;
                 this.numberOfLines  = 1;
             }
+            this.props.animateSlideIn();
             this.textInput.clear();
         }
     }

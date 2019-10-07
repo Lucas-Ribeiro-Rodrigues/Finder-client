@@ -16,7 +16,10 @@ export default class MultipleChoiceStepGenerator extends Component{
     componentDidUpdate(prevProps)
     {
         if(this.state.value != this.props.utils.options[0] && this.props != prevProps) //previnir loop
+        {
             this.setState({value: this.props.utils.options[0], activeButton: 0});
+            this.props.animateSlideIn();
+        }
     }
     
     render()

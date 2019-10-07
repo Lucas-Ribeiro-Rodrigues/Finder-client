@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         alignSelf: "stretch",
         justifyContent: "center",
-        backgroundColor: 'green',
+        backgroundColor: '#059F52',
         borderColor: '#d6d7da',
     },
     textButtonActive: {

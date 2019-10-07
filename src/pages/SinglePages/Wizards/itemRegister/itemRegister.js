@@ -55,6 +55,11 @@ export default class ItemRegister extends Component{
         this.stepUtils = { options : this.actualQuestionOptions }
     }
 
+    shouldComponentUpdate()
+    {
+        return Object.keys(this.stepUtils).length !== 0 && this.stepUtils.constructor === Object;
+    }
+
     static navigationOptions = ({ navigation }) => {
         const { state } = navigation;
 
@@ -121,42 +126,56 @@ export default class ItemRegister extends Component{
         return actualQuestion["Options"];
     }
 
-    AnimateNextTransition()
+    animateSlideOut()
     {
+        return new Promise(resolve => {
+            let {x} = this.state;
+            Animated.timing(x, {
+                toValue: -SCREEN_WIDTH,
+                duration: 300,
+                useNativeDriver: true
+            }).start();
+            setTimeout(() => resolve(), 300);
+        })
+    }
+
+    animateSlideIn = async() =>
+    {
+        await this.setState({x: new Animated.Value(SCREEN_WIDTH)});
         let {x} = this.state;
-        Animated.spring(x, {
-            toValue: -SCREEN_WIDTH
-        }).start();
-
-        x = SCREEN_WIDTH;
-
-        Animated.spring(x, {
+        Animated.timing(x, {
             toValue: 0,
+            duration: 300,
+            useNativeDriver: true
         }).start();
     }
 
     nextPreprocess = () => {
+        this.animateSlideOut().then(v => this.setNextStepConfig());
+    }
+
+    setNextStepConfig = () => {
         if(!this.category)
             this.category = this.categories[this.step.state.value];
         
         if(this.questionsLabel)
             if(this.questionsLabel.length - 2 == this.state.actualStep)
                 this.setState({isLastStep: true});
-        
-        this.AnimateNextTransition();
-        this.handleNewAnswer(this.state.answers, this.actualQuestionName, this.step.state.value, this.state.actualStep++);
+
+        this.handleNewAnswer(this.state.answers, this.actualQuestionName, this.step.state.value, this.state.actualStep + 1);
 
         let actualQuestion = this.getActualQuestion(this.stepContent, this.category, this.state.actualStep);
-        
         this.stepLabel = actualQuestion["Label"];
         this.stepUtils = {};
         this.props.navigation.setParams({stepLabel: this.stepLabel});
+        
         switch(actualQuestion["Type"])
         {
             case "MultipleChoice": {
+                
                 this.ActualStep = MultipleChoiceStepGenerator;
                 this.actualQuestionOptions  =   this.getQuestionOptions(actualQuestion, this.actualQuestionName);
-                this.stepUtils["options"]   =   this.actualQuestionOptions;    
+                this.stepUtils["options"]   =   this.actualQuestionOptions;  
                 break;
             }
             case "TextInput": {
@@ -171,20 +190,23 @@ export default class ItemRegister extends Component{
             }
             case "ImagePicker": {
                 this.ActualStep = ImagePickerStepGenerator;
+                this.stepUtils["isValidStep"] = true;
                 break;
             }
             case "MapLocation": {
                 this.ActualStep = MapLocationStepGenerator;
+                this.stepUtils["isValidStep"] = true;
                 break;
             }
         }
         actualQuestion["Name"] = this.actualQuestionName;
         this.steps.push(actualQuestion);
+        this.setState({invalid: false});
     }
 
     backButtonHandler = () => {
         this.steps.pop();
-        this.stepUtils = undefined;
+        this.stepUtils = {};
         if(this.steps.length === 0)
         {
             const {navigate} = this.props.navigation;
@@ -253,10 +275,13 @@ export default class ItemRegister extends Component{
     onFinish = () =>
     {
         this.handleNewAnswer(this.state.answers, this.actualQuestionName, this.step.state.value, this.state.actualStep)
+        alert("Item inserido");
+        const {navigate} = this.props.navigation;
+        navigate("Main");
     }
 
     render(){
-        let {isLastStep} = this.state;
+        let {isLastStep} = this.state; 
         return(
             <Container contentContainerStyle={{flex: 1}}>
                 <Content contentContainerStyle={{flex: 1}}>
@@ -270,7 +295,8 @@ export default class ItemRegister extends Component{
                           }]}>
                         <this.ActualStep 
                             ref     =   {e => this.step = e} 
-                            utils   =   {this.stepUtils}/>
+                            utils   =   {this.stepUtils}
+                            animateSlideIn = {this.animateSlideIn}/>
                     </Animated.View>
                 </Content>
                 <Footer 

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { Toast } from 'native-base';
 
-
 axios.defaults.baseURL = 'http://177.220.18.49:3000';//'http://192.168.0.12:3000';
 
 const postUser = (name, email, pass) => {

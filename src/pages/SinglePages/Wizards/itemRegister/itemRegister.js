@@ -1,22 +1,23 @@
-import React, { Component }                                 from "react";
-import  { StyleSheet, Dimensions, TouchableOpacity, Text }  from 'react-native'
-import { Container, Content, Footer }                       from 'native-base';
-import Category                                             from './Steps/category';
-import MultipleChoiceStepGenerator                          from './Steps/multipleChoiceStepGenerator';
-import TextInputStepGenerator                               from './Steps/textInputStepGenerator';
-import stepsJson                                            from './stepsInfo.json';
+import React, { Component }                                         from "react";
+import { StyleSheet, Dimensions, TouchableOpacity, Text, Alert }    from 'react-native'
+import { Container, Content, Footer }                               from 'native-base';
+import Category                                                     from './Steps/category';
+import MultipleChoiceStepGenerator                                  from './Steps/multipleChoiceStepGenerator';
+import TextInputStepGenerator                                       from './Steps/textInputStepGenerator';
+import stepsJson                                                    from './stepsInfo.json';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 export default class ItemRegister extends Component{
+    stepsStack = [];
 
     constructor(props){
         super(props);
-        this.ActualStep =  MultipleChoiceStepGenerator;
-        this.actualQuestionName   = "Category";
-        this.stepContent = stepsJson[this.actualQuestionName];
-        this.actualQuestionOptions = Object.keys(this.stepContent);
+        this.ActualStep             =  MultipleChoiceStepGenerator;
+        this.actualQuestionName     = "Category";
+        this.stepContent            = stepsJson[this.actualQuestionName];
+        this.actualQuestionOptions  = Object.keys(this.stepContent);
     }
 
     state = {invalid:false, actualStep: -1, answers: {}};
@@ -41,8 +42,8 @@ export default class ItemRegister extends Component{
         };
       };
 
-    handleNewAnswer = (answers, actualQuestionName, selectedItemValue, actualStep) => {
-        answers[actualQuestionName] = selectedItemValue;
+    handleNewAnswer = (answers, actualQuestionName, value, actualStep) => {
+        answers[actualQuestionName] = value;
         this.setState({
             actualStep: actualStep,
             answers: answers
@@ -66,14 +67,13 @@ export default class ItemRegister extends Component{
 
     nextPreprocess = () => {
         if(!this.category)
-            this.category = this.step.state.selectedItemValue;
+            this.category = this.step.state.value;
 
         
-        this.handleNewAnswer(this.state.answers, this.actualQuestionName, this.step.state.selectedItemValue, this.state.actualStep++);
+        this.handleNewAnswer(this.state.answers, this.actualQuestionName, this.step.state.value, this.state.actualStep++);
 
         let actualQuestion = this.getActualQuestion(this.questions, this.stepContent, this.category, this.actualQuestionName, this.state.actualStep);
         this.props.navigation.setParams({stepLabel: actualQuestion["Label"]});
-        console.log(this.state.answers);
         if(actualQuestion["Type"] === "MultipleChoice")
         {
             this.actualQuestionOptions  = this.getQuestionOptions(actualQuestion, this.actualQuestionName);
@@ -87,12 +87,21 @@ export default class ItemRegister extends Component{
 
     backButtonHandler = () => {
         const {navigate} = this.props.navigation;
-        Alert.alert("Tem certeza?", 
-                    "Você perderá todos os dados colocados sobre o item até agora e voltará para a página principal",
-                    [
-                        {text: "OK", onPress: () => navigate("Main")},
-                        {text: "Cancelar", style: "cancel"}
-                    ], {cancelable: true});
+        let actualStep = this.state.actualStep;
+        if(actualStep == 0)
+        {
+            Alert.alert("Tem certeza?", 
+                        "Você perderá todos os dados colocados sobre o item até agora e voltará para a página principal",
+                        [
+                            {text: "OK", onPress: () => navigate("Main")},
+                            {text: "Cancelar", style: "cancel"}
+                        ], {cancelable: true});
+        }
+        else
+        {
+            this.setState({actualStep: actualStep--});
+
+        }
     }
 
     render(){

@@ -33,6 +33,7 @@ const getItems = (situation) => {
 module.exports = {
     postUser,
     userLogin,
+    getUserData,
     postItem,
-    getItems
+    getItems,
 }

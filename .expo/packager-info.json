@@ -1,9 +1,9 @@
 {
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 7416,
-  "expoServerNgrokUrl": "https://vd-gyr.anonymous.finder-client.exp.direct",
-  "packagerNgrokUrl": "https://packager.vd-gyr.anonymous.finder-client.exp.direct",
-  "ngrokPid": 10616,
+  "packagerPid": 9624,
+  "expoServerNgrokUrl": "https://ef-suz.ribeiro652000.finder-client.exp.direct",
+  "packagerNgrokUrl": "https://packager.ef-suz.ribeiro652000.finder-client.exp.direct",
+  "ngrokPid": 7792,
   "devToolsPort": 19002
 }

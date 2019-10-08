@@ -6,6 +6,7 @@ import TextInputStepGenerator                                               from
 import ImagePickerStepGenerator                                             from './Steps/imagePickerStepGenerator';
 import MapLocationStepGenerator                                             from './Steps/mapLocationStepGenerator';
 import stepsJson                                                            from './stepsInfo.json';
+import {postItem}                                                           from '../../../../../networking/API';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -275,6 +276,8 @@ export default class ItemRegister extends Component{
     onFinish = () =>
     {
         this.handleNewAnswer(this.state.answers, this.actualQuestionName, this.step.state.value, this.state.actualStep)
+        postItem(this.state.answers)
+        .then(res => console.log(res));
         alert("Item inserido");
         const {navigate} = this.props.navigation;
         navigate("Main");

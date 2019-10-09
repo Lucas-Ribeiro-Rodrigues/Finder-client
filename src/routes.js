@@ -8,7 +8,7 @@ const AppNavigator =  createStackNavigator({
     Login   : {screen: login},
     Register: {screen: register},
     Main    : {screen: main}, 
-    ItemRegister: {screen: itemRegister}   
+    ItemRegister: {screen: itemRegister},  
 }, {initialRouteName: 'Main'});
 
 const AppContainer = createAppContainer(AppNavigator);

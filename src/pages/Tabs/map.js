@@ -1,6 +1,7 @@
 import React, { Component } from 'React';
 import { Dimensions, Text , View} from 'react-native';
 import { Container, Content, Fab, Icon } from 'native-base';
+import { getItems }                      from '../../../networking/API';
 import MapView from 'react-native-maps'
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -9,7 +10,7 @@ const Logo = require("../../../assets/icon.png");
 
 export default class Map extends Component{
     
-    state = {region: null}
+    state = {region: null, items: null}
 
     componentDidMount()
     {
@@ -24,19 +25,44 @@ export default class Map extends Component{
                     }
                 })
             }, //success
-            () => {}, //error 
+            () => {}, //erro 
             {
                 timeout : 2000,
                 enableHighAccuracy : true,
                 maximumAge : 1000
             }
-
         )
+        getItems()
+        .then(response => this.setState({items: response}));
+    }
+
+    generateMarkers = () => {
+        const {items} = this.state;
+        if(items)
+        {
+            return items.map((item, index) => {
+                if(item.Location)
+                {
+                    return(
+                        <MapView.Marker 
+                            key        = {index}
+                            coordinate = {item.Location}
+                            title      = {item.Situation == "Lost" ? "Perdido" : "Achado"}
+                            pinColor   = {item.Situation == "Lost" ? "tomato" : "green"}
+                            description= {item.Subcategory}/>
+                    )
+
+                }
+            })
+        }
+        else
+        return items;
     }
 
     render()
     {
         const {region} = this.state;
+        const markers  = this.generateMarkers();
         return(
                 <MapView
                     style={{flex:1
@@ -44,7 +70,9 @@ export default class Map extends Component{
                     initialRegion={region}
                     showsUserLocation
                     loadingEnabled
-                />
+                >
+                    {markers}
+                </MapView>
         )
     }
 }

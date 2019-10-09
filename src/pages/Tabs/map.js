@@ -25,7 +25,7 @@ export default class Map extends Component{
                     }
                 })
             }, //success
-            () => {}, //error 
+            () => {}, //erro 
             {
                 timeout : 2000,
                 enableHighAccuracy : true,

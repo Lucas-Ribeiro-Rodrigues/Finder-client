@@ -53,7 +53,7 @@ export default class ItemRegister extends Component{
             "Label"     :   this.stepLabel,
             "Name"      :   this.actualQuestionName,
         }];
-        this.stepUtils = { options : this.actualQuestionOptions }
+        this.stepUtils = { options : this.actualQuestionOptions , isFirstStep: true}
     }
 
     shouldComponentUpdate()
@@ -112,7 +112,7 @@ export default class ItemRegister extends Component{
     getActualQuestion(stepContent, category, actualStep){
         if(!this.questions) // questions == undefined
         {
-            this.questions = stepContent[category];
+            this.questions = Object.assign({}, stepContent[category]); // copiar o objeto
             this.addGenericQuestions();
             delete this.questions["Label"];
             this.questionsLabel = Object.keys(this.questions);
@@ -167,6 +167,7 @@ export default class ItemRegister extends Component{
 
         let actualQuestion = this.getActualQuestion(this.stepContent, this.category, this.state.actualStep);
         this.stepLabel = actualQuestion["Label"];
+        let isFirstStep = this.state.actualStep == -1; 
         this.stepUtils = {};
         this.props.navigation.setParams({stepLabel: this.stepLabel});
         
@@ -177,6 +178,7 @@ export default class ItemRegister extends Component{
                 this.ActualStep = MultipleChoiceStepGenerator;
                 this.actualQuestionOptions  =   this.getQuestionOptions(actualQuestion, this.actualQuestionName);
                 this.stepUtils["options"]   =   this.actualQuestionOptions;  
+                this.stepUtils["isFirstStep"]=  isFirstStep;
                 break;
             }
             case "TextInput": {
@@ -276,8 +278,7 @@ export default class ItemRegister extends Component{
     onFinish = () =>
     {
         this.handleNewAnswer(this.state.answers, this.actualQuestionName, this.step.state.value, this.state.actualStep)
-        postItem(this.state.answers)
-        .then(res => console.log(res));
+        postItem(this.state.answers);
         alert("Item inserido");
         const {navigate} = this.props.navigation;
         navigate("Main");

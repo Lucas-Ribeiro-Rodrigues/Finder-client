@@ -2,13 +2,13 @@ import React, {Component} from 'React';
 import { View, Text } from 'react-native';
 import ItemDetails from '../../components/items/itemDetails';
 import ItemsList from '../../components/items/itemsList';
-import {getItems} from '../../../networking/API';
+import {getItemsBySituation} from '../../../networking/API';
 
 export default class LostItemsList extends Component{
     state = {lostItems: undefined, details: undefined};
     constructor(props){
         super(props);
-        getItems('Lost')
+        getItemsBySituation('Lost')
             .then(value => {
                 this.setState({lostItems: value});
             })

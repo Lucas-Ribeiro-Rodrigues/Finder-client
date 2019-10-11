@@ -1,5 +1,6 @@
 import React, { Component }                                                 from "react";
-import { StyleSheet, Dimensions, TouchableOpacity, Text, Alert, Animated }  from 'react-native'
+import { StyleSheet, Dimensions, TouchableOpacity, 
+        Text, Alert, Animated, BackHandler, Platform }                      from 'react-native'
 import { Container, Content, Footer }                                       from 'native-base';
 import MultipleChoiceStepGenerator                                          from './Steps/multipleChoiceStepGenerator';
 import TextInputStepGenerator                                               from './Steps/textInputStepGenerator';
@@ -18,6 +19,8 @@ export default class ItemRegister extends Component{
     constructor(props){
         super(props);
         this.initAttributes();
+        if(Platform.OS === 'android')
+            BackHandler.addEventListener('hardwareBackPress', this.exit);
     }
 
     componentDidMount()
@@ -212,13 +215,7 @@ export default class ItemRegister extends Component{
         this.stepUtils = {};
         if(this.steps.length === 0)
         {
-            const {navigate} = this.props.navigation;
-            Alert.alert("Tem certeza?", 
-                        "Você perderá todos os dados colocados sobre o item até agora e voltará para a página principal",
-                        [
-                            {text: "OK", onPress: () => navigate("Main")},
-                            {text: "Cancelar", style: "cancel"}
-                        ], {cancelable: true});
+            this.exit();
         }
         else
         {
@@ -273,6 +270,17 @@ export default class ItemRegister extends Component{
 
             this.setState({actualStep: actualStep, answers: answers, isLastStep: isLastStep});
         }
+    }
+
+    exit = () => {
+        const {navigate} = this.props.navigation;
+        Alert.alert("Tem certeza?", 
+                    "Você perderá todos os dados colocados sobre o item até agora e voltará para a página principal",
+                    [
+                        {text: "OK", onPress: () => navigate("Main")},
+                        {text: "Cancelar", style: "cancel"}
+                    ], {cancelable: true});
+        return false;
     }
 
     onFinish = () =>

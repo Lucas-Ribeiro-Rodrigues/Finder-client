@@ -6,6 +6,7 @@ import MultipleChoiceStepGenerator                                          from
 import TextInputStepGenerator                                               from './Steps/textInputStepGenerator';
 import ImagePickerStepGenerator                                             from './Steps/imagePickerStepGenerator';
 import MapLocationStepGenerator                                             from './Steps/mapLocationStepGenerator';
+import DatePickerStepGenerator                                              from './Steps/datePickerStepGenerator';
 import stepsJson                                                            from './stepsInfo.json';
 import {postItem}                                                           from '../../../../../networking/API';
 
@@ -104,6 +105,10 @@ export default class ItemRegister extends Component{
             "Type"  : "ImagePicker",
             "Label" : "Foto"
         }
+        genericQuestions["Date"] = {
+            "Type"  : "DatePicker",
+            "Label" : "Data"
+        }
         genericQuestions["Location"] = {
             "Type"  : "MapLocation",
             "Label" : "Local onde perdeu"
@@ -130,12 +135,21 @@ export default class ItemRegister extends Component{
         return actualQuestion["Options"];
     }
 
-    animateSlideOut()
+    animateSlideOut = (direction) =>
     {
+        let finalValue;
+        if(direction === "left")
+        {
+            finalValue = -SCREEN_WIDTH;
+        }
+        else
+        {
+            finalValue = SCREEN_WIDTH;
+        }
         return new Promise(resolve => {
             let {x} = this.state;
             Animated.timing(x, {
-                toValue: -SCREEN_WIDTH,
+                toValue: finalValue,
                 duration: 300,
                 useNativeDriver: true
             }).start();
@@ -143,9 +157,15 @@ export default class ItemRegister extends Component{
         })
     }
 
-    animateSlideIn = async() =>
+    animateSlideIn = async(direction) =>
     {
-        await this.setState({x: new Animated.Value(SCREEN_WIDTH)});
+        let initialValue;
+        if(direction ==  "next")
+            initialValue = SCREEN_WIDTH;
+        else
+            initialValue = -SCREEN_WIDTH;
+
+        await this.setState({x: new Animated.Value(initialValue)});
         let {x} = this.state;
         Animated.timing(x, {
             toValue: 0,
@@ -155,7 +175,8 @@ export default class ItemRegister extends Component{
     }
 
     nextPreprocess = () => {
-        this.animateSlideOut().then(v => this.setNextStepConfig());
+        this.animateSlideOut('left')
+        .then(v => this.setNextStepConfig());
     }
 
     setNextStepConfig = () => {
@@ -204,13 +225,18 @@ export default class ItemRegister extends Component{
                 this.stepUtils["isValidStep"] = true;
                 break;
             }
+            case "DatePicker": {
+                this.ActualStep = DatePickerStepGenerator;
+                this.stepUtils["message"] = "Selecione a data " + (this.state.answers.Situation === "Found" ? 'do achado':'da perda');
+            }
         }
+        this.stepUtils["direction"] = "next";
         actualQuestion["Name"] = this.actualQuestionName;
         this.steps.push(actualQuestion);
         this.setState({invalid: false});
     }
 
-    backButtonHandler = () => {
+    previousPreprocess = () => {
         this.steps.pop();
         this.stepUtils = {};
         if(this.steps.length === 0)
@@ -219,57 +245,69 @@ export default class ItemRegister extends Component{
         }
         else
         {
-            let actualStep = this.state.actualStep;
-            let actualStepObj = this.steps[actualStep];
-            actualStep--;
-
-            if(actualStep == -1)
-            {
-                this.category = undefined;
-                this.questions = undefined;
-            }
-
-            switch(actualStepObj["Type"])
-            {
-                case "MultipleChoice": {
-                    this.ActualStep = MultipleChoiceStepGenerator;
-                    this.stepUtils["options"]   =   actualStepObj["Options"];  
-                    break;
-                }
-                case "TextInput": {
-                    this.ActualStep = TextInputStepGenerator;
-                    this.stepUtils["isTextArea"] = false;
-                    break;
-                }
-                case "TextArea": {
-                    this.ActualStep = TextInputStepGenerator;
-                    this.stepUtils["isTextArea"] = true;
-                    break;
-                }
-                case "ImagePicker": {
-                    this.ActualStep = ImagePickerStepGenerator;
-                    break;
-                }
-                case "MapLocation": {
-                    this.ActualStep = MapLocationStepGenerator;
-                    break;
-                }
-            }
-            this.stepLabel = actualStepObj["Label"];
-            this.actualQuestionOptions = actualStepObj["Options"];
-            
-            let answers = this.state.answers;
-            delete answers[this.actualQuestionName];
-
-            this.actualQuestionName = actualStepObj["Name"];
-            this.props.navigation.setParams({stepLabel: this.stepLabel});
-
-            let isLastStep = this.state.isLastStep;
-            if(isLastStep)
-                isLastStep = !isLastStep;
-
-            this.setState({actualStep: actualStep, answers: answers, isLastStep: isLastStep});
+            this.animateSlideOut('right')
+            .then(v => this.setPreviousStepConfig());
         }
+    }
+
+    setPreviousStepConfig = () => {
+        let actualStep = this.state.actualStep;
+        let actualStepObj = this.steps[actualStep];
+        actualStep--;
+
+        if(actualStep == -1)
+        {
+            this.category = undefined;
+            this.questions = undefined;
+        }
+
+        switch(actualStepObj["Type"])
+        {
+            case "MultipleChoice": {
+                this.ActualStep = MultipleChoiceStepGenerator;
+                this.stepUtils["options"]   =   actualStepObj["Options"];  
+                break;
+            }
+            case "TextInput": {
+                this.ActualStep = TextInputStepGenerator;
+                this.stepUtils["isTextArea"] = false;
+                break;
+            }
+            case "TextArea": {
+                this.ActualStep = TextInputStepGenerator;
+                this.stepUtils["isTextArea"] = true;
+                break;
+            }
+            case "ImagePicker": {
+                this.ActualStep = ImagePickerStepGenerator;
+                this.stepUtils["isValidStep"] = true;
+                break;
+            }
+            case "MapLocation": {
+                this.ActualStep = MapLocationStepGenerator;
+                this.stepUtils["isValidStep"] = true;
+                break;
+            }
+            case "DatePicker": {
+                this.ActualStep = DatePickerStepGenerator;
+                this.stepUtils["message"] = "Selecione a data " + (this.state.answers.Situation === "Found" ? 'do achado':'da perda');
+            }
+        }
+        this.stepUtils["direction"] = "prev";
+        this.stepLabel = actualStepObj["Label"];
+        this.actualQuestionOptions = actualStepObj["Options"];
+        
+        let answers = this.state.answers;
+        delete answers[this.actualQuestionName];
+
+        this.actualQuestionName = actualStepObj["Name"];
+        this.props.navigation.setParams({stepLabel: this.stepLabel});
+
+        let isLastStep = this.state.isLastStep;
+        if(isLastStep)
+            isLastStep = !isLastStep;
+
+        this.setState({actualStep: actualStep, answers: answers, isLastStep: isLastStep});
     }
 
     exit = () => {
@@ -280,7 +318,7 @@ export default class ItemRegister extends Component{
                         {text: "OK", onPress: () => navigate("Main")},
                         {text: "Cancelar", style: "cancel"}
                     ], {cancelable: true});
-        return false;
+        return true;
     }
 
     onFinish = () =>
@@ -314,7 +352,7 @@ export default class ItemRegister extends Component{
                 <Footer 
                     style={{backgroundColor: "#059F9F", flexDirection: "row", justifyContent: "flex-start"}}>
                     <TouchableOpacity 
-                        onPress =   {this.backButtonHandler}
+                        onPress =   {this.previousPreprocess}
                         color   =   "#059F9F"
                         style   =   {styles.buttonEnabled}>
                         <Text style={styles.buttonEnabledText}>Voltar</Text>

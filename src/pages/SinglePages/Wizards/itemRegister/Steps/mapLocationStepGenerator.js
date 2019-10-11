@@ -32,7 +32,7 @@ export default class MapLocationStepGenerator extends Component{
             }
             
         );
-        this.props.animateSlideIn();
+        this.props.animateSlideIn(this.props.utils.direction);
     }
     render()
     {

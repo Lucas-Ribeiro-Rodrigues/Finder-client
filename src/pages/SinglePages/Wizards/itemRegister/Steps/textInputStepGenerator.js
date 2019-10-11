@@ -16,7 +16,7 @@ export default class TextInputStepGenerator extends Component{
 
     componentDidMount()
     {
-        this.props.animateSlideIn();
+        this.props.animateSlideIn(this.props.utils.direction);
         this.multiline      = false;
         this.numberOfLines  = 1;
     }
@@ -35,7 +35,7 @@ export default class TextInputStepGenerator extends Component{
                 this.multiline      = false;
                 this.numberOfLines  = 1;
             }
-            this.props.animateSlideIn();
+            this.props.animateSlideIn(this.props.utils.direction);
             this.textInput.clear();
         }
     }

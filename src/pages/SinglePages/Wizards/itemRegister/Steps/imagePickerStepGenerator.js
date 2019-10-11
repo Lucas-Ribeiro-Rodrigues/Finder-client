@@ -15,7 +15,7 @@ export default class ImagePickerStepGenerator extends Component{
 
     componentDidMount(prevProps)
     {
-        this.props.animateSlideIn();
+        this.props.animateSlideIn(this.props.utils.direction);
     }
 
     launchImageLibrary = async() =>

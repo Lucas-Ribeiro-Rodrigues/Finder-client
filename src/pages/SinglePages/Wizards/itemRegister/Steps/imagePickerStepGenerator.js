@@ -22,7 +22,6 @@ export default class ImagePickerStepGenerator extends Component{
     {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Image,
-            allowsEditing: true,
             base64: true,
             aspect: [4, 3],
           })
@@ -41,8 +40,20 @@ export default class ImagePickerStepGenerator extends Component{
                 onPress={this.launchImageLibrary}>
                 <Image 
                     source={(this.state.image ? {uri: this.state.image} : DefaultImage)}
-                    style={{flex: 1, height: undefined, width: undefined}}/>
+                    style={styles.ImagePicker}/>
             </TouchableOpacity>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    ImagePicker: {
+        flex: 1, 
+        height: undefined, 
+        width: undefined, 
+        margin: 20, 
+        borderRadius: 4,
+        borderWidth: 2, 
+        borderColor: 'black'
+    }
+})

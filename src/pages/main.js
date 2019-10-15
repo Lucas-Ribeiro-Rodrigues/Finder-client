@@ -45,8 +45,8 @@ export default class Main extends Component{
         return(
         <Container>
             {this.state.btnSelected != 1 ? <Content>
-                <SelectedTab/>
-            </Content>: <SelectedTab/>}
+                <SelectedTab navigate={navigate}/>
+            </Content>: <SelectedTab navigate={navigate}/>}
             <Fab
                 active = {this.state.active}
                 direction="down"

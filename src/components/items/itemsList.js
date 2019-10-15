@@ -5,8 +5,6 @@ import { Container, Header, Content, Card, CardItem, Body} from 'native-base';
 export default class ItemsList extends Component{
     constructor(props){
         super(props);
-        //props.utils.onPressHandler({Subcategory: 'hamster', Details: 'boludo'});
-        
     }
 
     generateList = () => {

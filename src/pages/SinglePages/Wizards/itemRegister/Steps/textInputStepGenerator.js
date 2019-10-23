@@ -5,7 +5,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default class TextInputStepGenerator extends Component{
 
-    state = {value: ''}
+    state = {value: null}
     
     onValueChangeHandler = (value) => 
     {
@@ -59,15 +59,15 @@ export default class TextInputStepGenerator extends Component{
 
 const styles = StyleSheet.create({
     TextInput:{
-        borderRadius: 6,
-        borderWidth :  2,
-        height      :       40,
-        width       : SCREEN_WIDTH - 20,
-        paddingRight: 10,
-        paddingLeft : 10,
-        fontSize    :     20,
-        alignSelf   : "center",
-        borderColor : '#d6d7da'
+        borderRadius:   6,
+        borderWidth :   2,
+        height      :   40,
+        width       :   SCREEN_WIDTH - 20,
+        paddingRight:   10,
+        paddingLeft :   10,
+        fontSize    :   20,
+        alignSelf   :   "center",
+        borderColor :   '#d6d7da'
     },
     TextArea: {
         height              : 400, 

@@ -1,6 +1,6 @@
 import React, { Component } from "React";
 import { Text, StyleSheet }      from "react-native"
-import { Footer, FooterTab, Button, Icon, Container, Content, Fab} from "native-base";
+import { Footer, FooterTab, Button, Icon, Container, Content, Fab} from "native-base";   
 import Map              from './Tabs/map'; 
 import FoundItemsList   from './Tabs/foundItemsList'; 
 import LostItemsList    from './Tabs/lostItemsList'; 
@@ -38,6 +38,8 @@ export default class Main extends Component{
                 SelectedTab = LostItemsList;
                 break;
             case 4:
+                SelectedTab = UserItems;
+            case 5:
                 SelectedTab = Profile;
                 break;
         }       
@@ -45,8 +47,8 @@ export default class Main extends Component{
         return(
         <Container>
             {this.state.btnSelected != 1 ? <Content>
-                <SelectedTab/>
-            </Content>: <SelectedTab/>}
+                <SelectedTab email={this.props.loggedUserEmail}/>
+            </Content>: <SelectedTab email={this.props.loggedUserEmail}/>}
             <Fab
                 active = {this.state.active}
                 direction="down"
@@ -57,36 +59,47 @@ export default class Main extends Component{
                 <Icon 
                     type="FontAwesome" 
                     name="plus"/>
-                {this.state.active? <Button style={{ backgroundColor: '#1f8686' }} onPress={() => navigate('ItemRegister', {navigation: this.props.navigation, situation: "Found"})}>
+                {this.state.active? <Button style={{ backgroundColor: '#1f8686' }} onPress={() => navigate('ItemRegister', {navigation: this.props.navigation, situation: "Found", email: this.props.loggedUserEmail})}>
                     <Icon name="ios-happy"/>
                 </Button>:null}
-                {this.state.active? <Button style={{ backgroundColor: '#1f8686' }} onPress={() => navigate('ItemRegister', {navigation: this.props.navigation, situation: "Lost"})}>
+                {this.state.active? <Button style={{ backgroundColor: '#1f8686' }} onPress={() => navigate('ItemRegister', {navigation: this.props.navigation, situation: "Lost", email: this.props.loggedUserEmail})}>
                     <Icon name="md-search"/>
                 </Button>:null}
             </Fab>
             <Footer>
                 <FooterTab style={styles.footer} >
                     <Button vertical 
+                            active={this.state.btnSelected == 1 ? true:false}
                             onPress = {() => {this.setState({btnSelected: 1}); this.props.navigation.setParams({title: 'Mapa'})}}
-                            style={(this.state.btnSelected== 1)?styles.footerButtonSelected:styles.footer}>
+                            style={this.state.btnSelected== 1?styles.footerButtonSelected:styles.footer}>
                         <Icon name="compass"/>
                         <Text style={styles.text_white}>Mapa</Text>
                     </Button>
-                    <Button vertical 
+                    <Button vertical
+                            active={this.state.btnSelected == 2 ? true:false} 
                             onPress = {() => {this.setState({btnSelected: 2}); this.props.navigation.setParams({title: 'Pagina de itens achados'})}}
-                            style={(this.state.btnSelected== 2)?styles.footerButtonSelected:styles.footer}>
+                            style={this.state.btnSelected== 2?styles.footerButtonSelected:styles.footer}>
                         <Icon name="ios-happy"/>
                         <Text style={styles.text_white}>Achados</Text>
                     </Button>
-                    <Button vertical active 
+                    <Button vertical 
+                            active={this.state.btnSelected == 3 ? true:false}
                             onPress = {() => {this.setState({btnSelected: 3}); this.props.navigation.setParams({title: 'Pagina de itens perdidos'})}}
-                            style = {(this.state.btnSelected== 3)?styles.footerButtonSelected:styles.footer}> 
+                            style = {this.state.btnSelected== 3?styles.footerButtonSelected:styles.footer}> 
                         <Icon active name="md-search" />
                         <Text style={styles.text_white}>Perdidos</Text>
                     </Button>
+                    <Button vertical 
+                            active={this.state.btnSelected == 4 ? true:false}
+                            onPress = {() => {this.setState({btnSelected: 4}); this.props.navigation.setParams({title: 'Pagina de itens perdidos'})}}
+                            style = {this.state.btnSelected== 4?styles.footerButtonSelected:styles.footer}> 
+                        <Icon active name="md-locate" />
+                        <Text style={styles.text_white}>Localizar</Text>
+                    </Button>
                     <Button vertical
-                            onPress = {() => {this.setState({btnSelected: 4}); this.props.navigation.setParams({title: 'Perfil'})}}
-                            style = {(this.state.btnSelected== 4)?styles.footerButtonSelected:styles.footer}>
+                            active={this.state.btnSelected == 5 ? true:false}
+                            onPress = {() => {this.setState({btnSelected: 5}); this.props.navigation.setParams({title: 'Perfil'})}}
+                            style = {this.state.btnSelected== 5?styles.footerButtonSelected:styles.footer}>
                         <Icon name="person"/>
                         <Text style={styles.text_white}>Perfil</Text>
                     </Button>

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Toast } from 'native-base';
 
-axios.defaults.baseURL = 'https://finder-node-server.herokuapp.com';
+axios.defaults.baseURL = 'http://177.220.18.48:3000';//'https://finder-node-server.herokuapp.com';
 
 const postUser = (name, email, pass) => {
     return axios.post('/users-management/user-register', {Name: name, Email: email, Password: pass})
@@ -26,15 +26,20 @@ const postItem = (item) => {
         .then(response => response.data)
 }
 
+const getItems = () => {
+    return axios.get("/items-management/items")
+        .then(response => response.data)
+}
+
 const getItemsBySituation = (situation) => {
     return axios.get(`/items-management/items/${situation}`)
         .then(response => response.data)
 }
 
-const getItems = () => {
-    return axios.get("/items-management/items")
+/*const getItemsFromUser = (email) => {
+    return axios.get(`/items-management/items/${email}`)
         .then(response => response.data)
-}
+}*/
 
 module.exports = {
     postUser,

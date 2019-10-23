@@ -1,12 +1,12 @@
 import React, {Component} from 'React';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { Container, Header, Content, Card, CardItem, Body} from 'native-base';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Body, Card, CardItem, Container, Content, Header, Thumbnail} from 'native-base';
+
+const subcat = require("../../../assets/subcategory/");
 
 export default class ItemsList extends Component{
     constructor(props){
         super(props);
-        //props.utils.onPressHandler({Subcategory: 'hamster', Details: 'boludo'});
-        
     }
 
     generateList = () => {
@@ -19,6 +19,8 @@ export default class ItemsList extends Component{
                     <TouchableOpacity key={i} buttonIndex={i++} onPress={()=>this.props.utils.onPressHandler(item)}>
                         <Card>
                             <CardItem>
+                                <Thumbnail source={{uri:"../../../assets/subcategory/iphone11.jpg"}} />
+
                                 <Body>
                                     <Text>Item: {item.Subcategory? item.Subcategory: "Indefinido"}</Text>
                                     <Text>Categoria: {item.Category? item.Category: "Indefinido"}</Text>

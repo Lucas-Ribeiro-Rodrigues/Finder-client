@@ -28,6 +28,7 @@ export default class ItemRegister extends Component{
     {
         let {answers} = this.state;
         answers["Situation"] = this.props.navigation.state.params.situation;
+        answers["User"] = this.props.email;
         this.setState({answers: answers});
     }
 
@@ -323,7 +324,7 @@ export default class ItemRegister extends Component{
 
     onFinish = () =>
     {
-        this.handleNewAnswer(this.state.answers, this.actualQuestionName, this.step.state.value, this.state.actualStep)
+        this.handleNewAnswer(this.state.answers, this.actualQuestionName, this.step.state.value, this.state.actualStep);
         postItem(this.state.answers);
         alert("Item inserido");
         const {navigate} = this.props.navigation;

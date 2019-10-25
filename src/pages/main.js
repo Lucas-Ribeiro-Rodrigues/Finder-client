@@ -69,35 +69,35 @@ export default class Main extends Component{
             <Footer>
                 <FooterTab style={styles.footer} >
                     <Button vertical 
-                            active={this.state.btnSelected == 1 ? true:false}
+                            active={this.state.btnSelected == 1}
                             onPress = {() => {this.setState({btnSelected: 1}); this.props.navigation.setParams({title: 'Mapa'})}}
                             style={this.state.btnSelected== 1?styles.footerButtonSelected:styles.footer}>
                         <Icon name="compass"/>
                         <Text style={styles.text_white}>Mapa</Text>
                     </Button>
                     <Button vertical
-                            active={this.state.btnSelected == 2 ? true:false} 
+                            active={this.state.btnSelected == 2} 
                             onPress = {() => {this.setState({btnSelected: 2}); this.props.navigation.setParams({title: 'Pagina de itens achados'})}}
                             style={this.state.btnSelected== 2?styles.footerButtonSelected:styles.footer}>
                         <Icon name="ios-happy"/>
                         <Text style={styles.text_white}>Achados</Text>
                     </Button>
                     <Button vertical 
-                            active={this.state.btnSelected == 3 ? true:false}
+                            active={this.state.btnSelected == 3}
                             onPress = {() => {this.setState({btnSelected: 3}); this.props.navigation.setParams({title: 'Pagina de itens perdidos'})}}
                             style = {this.state.btnSelected== 3?styles.footerButtonSelected:styles.footer}> 
                         <Icon active name="md-search" />
                         <Text style={styles.text_white}>Perdidos</Text>
                     </Button>
                     <Button vertical 
-                            active={this.state.btnSelected == 4 ? true:false}
+                            active={this.state.btnSelected == 4}
                             onPress = {() => {this.setState({btnSelected: 4}); this.props.navigation.setParams({title: 'Pagina de itens perdidos'})}}
                             style = {this.state.btnSelected== 4?styles.footerButtonSelected:styles.footer}> 
                         <Icon active name="md-locate" />
                         <Text style={styles.text_white}>Localizar</Text>
                     </Button>
                     <Button vertical
-                            active={this.state.btnSelected == 5 ? true:false}
+                            active={this.state.btnSelected == 5}
                             onPress = {() => {this.setState({btnSelected: 5}); this.props.navigation.setParams({title: 'Perfil'})}}
                             style = {this.state.btnSelected== 5?styles.footerButtonSelected:styles.footer}>
                         <Icon name="person"/>

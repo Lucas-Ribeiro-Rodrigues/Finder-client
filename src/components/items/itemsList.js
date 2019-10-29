@@ -23,21 +23,24 @@ export default class ItemsList extends Component{
         var i = 0;
         let list;
         if (itens){
-            list = itens.map(item => {
+            list = itens.map((item, index) => {
                 return (
-                    <TouchableOpacity key={i} buttonIndex={i++} onPress={()=>this.props.utils.onPressHandler(item)}>
-                        <Card>
-                            <ListItem icon>
-                                <Left>
-                                    <Icon active name={this.icons[item.Category]} size={25} color="#999" />
-                                </Left>
-                                <Body>
-                                    <Text>Item: {item.Subcategory? item.Subcategory: "Indefinido"}</Text>
-                                    <Text>Categoria: {item.Category? item.Category: "Indefinido"}</Text>
-                                </Body>
-                            </ListItem>
-                        </Card>
-                    </TouchableOpacity>)
+                    
+                        
+                    <Card key={index}>
+                        <ListItem icon onPress={()=>this.props.utils.onPressHandler(item)}>
+                        
+                            <Left >
+                                <Icon active name={this.icons[item.Category]} size={25} color="#999" />
+                            </Left>
+                            <Body>
+                                <Text>Item: {item.Subcategory? item.Subcategory: "Indefinido"}</Text>
+                                <Text>Categoria: {item.Category? item.Category: "Indefinido"}</Text>
+                            </Body>
+                            
+                        </ListItem>
+                        
+                    </Card>)
             });
         }
 

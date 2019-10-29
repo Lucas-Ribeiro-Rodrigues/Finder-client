@@ -1,8 +1,7 @@
 {
-  "urlRandomness": "ip-k6u",
   "hostType": "lan",
   "lanType": "ip",
   "dev": true,
   "minify": false,
-  "https": false
+  "urlRandomness": "43-m9y"
 }

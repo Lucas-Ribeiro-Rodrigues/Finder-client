@@ -4,7 +4,7 @@ import { View } from 'react-native';
 
 export default class Steps extends Component {
 
-    state = {value: ''}
+    state = {value: null}
 
     constructor(props)
     {

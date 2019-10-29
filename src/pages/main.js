@@ -5,11 +5,12 @@ import Map              from './Tabs/map';
 import FoundItemsList   from './Tabs/foundItemsList'; 
 import LostItemsList    from './Tabs/lostItemsList'; 
 import Profile          from './Tabs/profile';
+import UserItemsList    from './Tabs/userItemsList';
 import MapView from 'react-native-maps'
 
 export default class Main extends Component{
 
-    state = {btnSelected: 1, title: 'Mapa', active: false}
+    state = {btnSelected: 1, title: 'Mapa', active: false, loggedUserEmail: null}
     
     static navigationOptions = ({ navigation }) => {
         const { state } = navigation;
@@ -22,6 +23,20 @@ export default class Main extends Component{
                 headerTintColor: '#FFF',
         };
       };
+
+    componentDidUpdate()
+    {
+        let {navigate} = this.props.navigation;
+        if(!this.props.navigation.state.params.loggedUserEmail)
+        {
+            navigate("Login");
+        }
+        else
+        {
+            if(!this.state.loggedUserEmail)
+                this.setState({loggedUserEmail:this.props.navigation.state.params.loggedUserEmail});
+        }
+    }
 
     render(){
         const {navigate} = this.props.navigation;
@@ -38,17 +53,18 @@ export default class Main extends Component{
                 SelectedTab = LostItemsList;
                 break;
             case 4:
-                SelectedTab = UserItems;
+                SelectedTab = UserItemsList;
+                break;
             case 5:
                 SelectedTab = Profile;
                 break;
         }       
-
+        
         return(
         <Container>
             {this.state.btnSelected != 1 ? <Content>
-                <SelectedTab email={this.props.loggedUserEmail}/>
-            </Content>: <SelectedTab email={this.props.loggedUserEmail}/>}
+                <SelectedTab email={this.state.loggedUserEmail}/>
+            </Content>: <SelectedTab email={this.state.loggedUserEmail}/>}
             <Fab
                 active = {this.state.active}
                 direction="down"
@@ -59,10 +75,10 @@ export default class Main extends Component{
                 <Icon 
                     type="FontAwesome" 
                     name="plus"/>
-                {this.state.active? <Button style={{ backgroundColor: '#1f8686' }} onPress={() => navigate('ItemRegister', {navigation: this.props.navigation, situation: "Found", email: this.props.loggedUserEmail})}>
+                {this.state.active? <Button style={{ backgroundColor: '#1f8686' }} onPress={() => navigate('ItemRegister', {navigation: this.props.navigation, situation: "Found", email: this.state.loggedUserEmail})}>
                     <Icon name="ios-happy"/>
                 </Button>:null}
-                {this.state.active? <Button style={{ backgroundColor: '#1f8686' }} onPress={() => navigate('ItemRegister', {navigation: this.props.navigation, situation: "Lost", email: this.props.loggedUserEmail})}>
+                {this.state.active? <Button style={{ backgroundColor: '#1f8686' }} onPress={() => navigate('ItemRegister', {navigation: this.props.navigation, situation: "Lost", email: this.state.loggedUserEmail})}>
                     <Icon name="md-search"/>
                 </Button>:null}
             </Fab>

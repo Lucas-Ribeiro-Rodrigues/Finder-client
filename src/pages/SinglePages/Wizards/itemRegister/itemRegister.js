@@ -28,7 +28,7 @@ export default class ItemRegister extends Component{
     {
         let {answers} = this.state;
         answers["Situation"] = this.props.navigation.state.params.situation;
-        answers["User"] = this.props.email;
+        answers["User"] = this.props.navigation.state.params.email;
         this.setState({answers: answers});
     }
 

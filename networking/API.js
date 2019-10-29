@@ -36,10 +36,10 @@ const getItemsBySituation = (situation) => {
         .then(response => response.data)
 }
 
-/*const getItemsFromUser = (email) => {
-    return axios.get(`/items-management/items/${email}`)
+const getItemsFromUser = (email) => {
+    return axios.get(`/items-management/user-items/${email}`)
         .then(response => response.data)
-}*/
+}
 
 module.exports = {
     postUser,
@@ -48,4 +48,5 @@ module.exports = {
     postItem,
     getItems,
     getItemsBySituation,
+    getItemsFromUser
 }

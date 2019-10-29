@@ -2,7 +2,7 @@ import React, {Component} from 'React';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { Body, Card, CardItem, Container, Content, Header, Thumbnail} from 'native-base';
 
-const subcat = require("../../../assets/subcategory/");
+//const subcat = require("../../../assets/subcategory/");
 
 export default class ItemsList extends Component{
     constructor(props){
@@ -19,7 +19,7 @@ export default class ItemsList extends Component{
                     <TouchableOpacity key={i} buttonIndex={i++} onPress={()=>this.props.utils.onPressHandler(item)}>
                         <Card>
                             <CardItem>
-                                <Thumbnail source={{uri:"../../../assets/subcategory/iphone11.jpg"}} />
+                                {/*<Thumbnail source={{uri:"../../../assets/subcategory/iphone11.jpg"}} />*/}
 
                                 <Body>
                                     <Text>Item: {item.Subcategory? item.Subcategory: "Indefinido"}</Text>

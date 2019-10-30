@@ -18,6 +18,7 @@ export default class LostItemsList extends Component{
 
     showDetails = item => {
         //passar as infos do item
+        console.log("teste clique do botao");
         this.setState({details:item});
     }
 

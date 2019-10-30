@@ -1,10 +1,10 @@
 {
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 5196,
-  "expoServerNgrokUrl": "https://ip-k6u.anonymous.finder-client.exp.direct",
-  "packagerNgrokUrl": "https://packager.ip-k6u.anonymous.finder-client.exp.direct",
-  "ngrokPid": 9236,
+  "packagerPid": 11968,
+  "expoServerNgrokUrl": "https://me-z64.anonymous.finder-client.exp.direct",
+  "packagerNgrokUrl": "https://packager.me-z64.anonymous.finder-client.exp.direct",
+  "ngrokPid": 5800,
   "devToolsPort": 19002,
   "webpackServerPort": null
 }

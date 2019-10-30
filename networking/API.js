@@ -41,6 +41,11 @@ const getItemsFromUser = (email) => {
         .then(response => response.data)
 }
 
+const getTrackedItems = (item) => {
+    return axios.post('/items-management/items-tracking', item)
+        .then(response => response.data);
+}
+
 module.exports = {
     postUser,
     userLogin,
@@ -48,5 +53,6 @@ module.exports = {
     postItem,
     getItems,
     getItemsBySituation,
-    getItemsFromUser
+    getItemsFromUser,
+    getTrackedItems
 }

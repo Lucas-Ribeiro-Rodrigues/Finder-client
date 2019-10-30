@@ -5,13 +5,12 @@ import Map              from './Tabs/map';
 import FoundItemsList   from './Tabs/foundItemsList'; 
 import LostItemsList    from './Tabs/lostItemsList'; 
 import Profile          from './Tabs/profile';
-import UserItemsList    from './Tabs/userItemsList';
+import UserItemsList    from './Tabs/itemTracking/userItemsList';
 import MapView from 'react-native-maps'
 
 export default class Main extends Component{
 
     state = {btnSelected: 1, title: 'Mapa', active: false, loggedUserEmail: null}
-    
     static navigationOptions = ({ navigation }) => {
         const { state } = navigation;
       
@@ -107,7 +106,7 @@ export default class Main extends Component{
                     </Button>
                     <Button vertical 
                             active={this.state.btnSelected == 4}
-                            onPress = {() => {this.setState({btnSelected: 4}); this.props.navigation.setParams({title: 'Pagina de itens perdidos'})}}
+                            onPress = {() => {this.setState({btnSelected: 4}); this.props.navigation.setParams({title: 'Seus itens'})}}
                             style = {this.state.btnSelected== 4?styles.footerButtonSelected:styles.footer}> 
                         <Icon active name="md-locate" />
                         <Text style={styles.text_white}>Localizar</Text>

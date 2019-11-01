@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
-import {Text } from 'react-native';
-import  { getTrackedItems } from '../../../../networking/API'
+import  React, { Component }                                         from 'react';
+import  { Text, View }                                               from 'react-native';
+import  { DeckSwiper, Card, CardItem, Icon, Body, Left, Thumbnail }  from 'native-base';
+import  { getTrackedItems }                                         from '../../../../networking/API'
 
 export default class ItemTracking extends Component {
 
@@ -8,9 +9,8 @@ export default class ItemTracking extends Component {
 
     componentDidMount()
     {
-        console.log(this.props.utils.item);
         getTrackedItems(this.props.utils.item)
-        .then(value => console.log(value)/*this.setState({trackedItemsList: value})*/);
+        .then(value => this.setState({trackedItemsList: value}));
     }
 
     componentDidUpdate(prevProps)
@@ -21,7 +21,37 @@ export default class ItemTracking extends Component {
             .then(value => this.setState({trackedItemsList:value}));
         }
     }
+
+    generateCard = (item) => {
+        return(
+        <Card style={{ elevation: 3 }}>
+        <CardItem>
+            <Left>
+            <Thumbnail source={item.Image} />
+            <Body>
+                <Text>{item.Subcategory}</Text>
+                <Text note>NativeBase</Text>
+            </Body>
+            </Left>
+        </CardItem>
+        <CardItem cardBody>
+            <Image style={{ height: 300, flex: 1 }} source={item.Image} />
+        </CardItem>
+        <CardItem>
+            <Icon name="heart" style={{ color: '#ED4A6A' }} />
+            <Text>{item.name}</Text>
+        </CardItem>
+        </Card>)
+    }
+
     render() {
-        return <Text> items: </Text>;
+        return (
+            <View>
+                <DeckSwiper
+                dataSource={cards}
+                renderItem={this.generateCard}
+                />
+            </View>
+        );
     }
 }

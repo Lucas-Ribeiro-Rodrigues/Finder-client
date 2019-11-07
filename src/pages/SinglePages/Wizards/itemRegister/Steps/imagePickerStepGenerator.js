@@ -3,7 +3,6 @@ import {StyleSheet, Image,
         TouchableOpacity, Platform }    from 'react-native'
 import DefaultImage                     from '../../../../../../assets/camera_default.png'
 import * as ImagePicker                 from 'expo-image-picker'
-import firebase                         from 'firebase'
 
 export default class ImagePickerStepGenerator extends Component{
 
@@ -13,37 +12,6 @@ export default class ImagePickerStepGenerator extends Component{
     {
         super(props);
     }
-
-    uploadImage = () => {
-        let uri = this.state.image;
-        if(uri)
-        {
-            const blob = await new Promise((resolve, reject) => {
-                const xhr = new XMLHttpRequest();
-                xhr.onload = function() {
-                  resolve(xhr.response);
-                };
-                xhr.onerror = function(e) {
-                  console.log(e);
-                  reject(new TypeError('Network request failed'));
-                };
-                xhr.responseType = 'blob';
-                xhr.open('GET', uri, true);
-                xhr.send(null);
-              });
-            
-              const ref = firebase
-                .storage()
-                .ref()
-                .child(uuid.v4());
-              const snapshot = await ref.put(blob);
-            
-              // We're done with the blob, close and release it
-              blob.close();
-            
-              this.setState({value: snapshot.ref.getDownloadURL()});
-        }
-      };
 
     componentDidMount(prevProps)
     {
@@ -60,7 +28,7 @@ export default class ImagePickerStepGenerator extends Component{
           
           if(!result.cancelled)
           {
-                this.setState({image: result.uri});
+                this.setState({image: result.uri, value: result.uri});
           }
     }
 

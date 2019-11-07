@@ -9,7 +9,7 @@ import MapLocationStepGenerator                                             from
 import DatePickerStepGenerator                                              from './Steps/datePickerStepGenerator';
 import stepsJson                                                            from './stepsInfo.json';
 import {postItem}                                                           from '../../../../../networking/API';
-
+import firebase                                                             from '../../../../../config/firebaseConfig'
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
@@ -195,7 +195,7 @@ export default class ItemRegister extends Component{
         let isFirstStep = this.state.actualStep == -1; 
         this.stepUtils = {};
         this.props.navigation.setParams({stepLabel: this.stepLabel});
-        
+        console.log(this.state.answers);
         switch(actualQuestion["Type"])
         {
             case "MultipleChoice": {
@@ -325,11 +325,55 @@ export default class ItemRegister extends Component{
     onFinish = () =>
     {
         this.handleNewAnswer(this.state.answers, this.actualQuestionName, this.step.state.value, this.state.actualStep);
-        postItem(this.state.answers);
-        alert("Item inserido");
-        const {navigate} = this.props.navigation;
-        navigate("Main");
+        this.uploadImage(this.state.answers.Image)
+        .then(() => {
+            console.log(this.state.answers);
+            postItem(this.state.answers);
+            alert("Item inserido");
+            const {navigate} = this.props.navigation;
+            navigate("Main");
+        })
     }
+
+    uploadImage = async(uri) => {
+        return new Promise(async(resolve, reject) => 
+        {
+            let answers = this.state.answers;
+            if(uri)
+            {
+                const blob = await new Promise((resolve, reject) => {
+                    const xhr = new XMLHttpRequest();
+                    xhr.onload = function() {
+                        resolve(xhr.response);
+                    };
+                    xhr.onerror = function(e) {
+                        console.log(e);
+                        reject(new TypeError('Network request failed'));
+                    };
+                    xhr.responseType = 'blob';
+                    xhr.open('GET', uri, true);
+                    xhr.send(null);
+                });
+                
+                const ref = firebase
+                .storage()
+                .ref()
+                .child('_' + Math.random().toString(36).substr(2, 9));
+                const snapshot = await ref.put(blob);
+            
+                blob.close();
+            
+                snapshot.ref.getDownloadURL()
+                .then(value => {answers["Image"] = value; this.setState({answers: answers}); resolve()});
+            }
+            else
+            {
+                answers["Image"] = null;
+                this.setState({answers: answers});
+                resolve();
+            }
+        })
+      };
 
     render(){
         let {isLastStep} = this.state; 

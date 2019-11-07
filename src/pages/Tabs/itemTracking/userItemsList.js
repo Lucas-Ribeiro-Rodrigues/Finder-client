@@ -35,6 +35,7 @@ export default class UserItemsList extends Component {
     }
 
     render() {
-        return (<this.state.SelectedPage utils={(this.state.utils ? this.state.utils: {})}/>);
+        return (<this.state.SelectedPage 
+                    utils={(this.state.utils ? this.state.utils: {})}/>);
     }
 }

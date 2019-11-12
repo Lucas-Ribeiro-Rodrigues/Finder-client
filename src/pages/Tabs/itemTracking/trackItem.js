@@ -7,10 +7,11 @@ import   DefaultImage from '../../../../assets/question_mark.png'
 
 export default class ItemTracking extends Component {
 
-    state = {trackedItemsList: null}
+    state = {trackedItemsList: null, match: []}
 
     componentDidMount()
     {
+        this.match = [];
         getTrackedItems(this.props.utils.item)
         .then(value => this.setState({trackedItemsList: value}));
     }
@@ -19,6 +20,7 @@ export default class ItemTracking extends Component {
     {   
         if(prevProps != this.props)
         {
+            this.match = [];
             getTrackedItems(this.props.utils.item)
             .then(value => this.setState({trackedItemsList:value}));
         }
@@ -45,21 +47,31 @@ export default class ItemTracking extends Component {
         </Card>)
     }
 
+    onSwipeLeft = (item) => {
+
+    }
+
+    onSwipeRight = (item) => {
+        if(!this.state.match.includes(item))
+            this.state.match.push(item);
+
+        console.log(this.state.match);
+    }
+
     render() {
-        console.log(this.state.trackedItemsList);
         return (
             <View style={{flex: 1, height: 500, width: 350, alignSelf: "center", marginTop: 70}}>
                 {this.state.trackedItemsList ? 
                 <DeckSwiper
-                dataSource={this.state.trackedItemsList ? this.state.trackedItemsList: ["empty"]}
-                renderEmpty={() =>
+                dataSource  =   {this.state.trackedItemsList ? this.state.trackedItemsList: ["empty"]}
+                renderEmpty=    {() =>
                     <View style={{ alignSelf: "center", justifyContent: "center" }}>
                       <Text>Over</Text>
                     </View>
                   }
-                renderItem={this.generateCard}
-                onSwipeLeft={item => console.log("Esquerda")}
-                onSwipeRight={item => console.log("Direita")}
+                renderItem  =   {this.generateCard}
+                onSwipeLeft =   {this.onSwipeLeft}
+                onSwipeRight=   {this.onSwipeRight}
                 looping ={false}
                 />: null}
             </View>

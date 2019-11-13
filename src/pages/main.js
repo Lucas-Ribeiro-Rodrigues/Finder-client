@@ -26,15 +26,15 @@ export default class Main extends Component{
     componentDidUpdate()
     {
         let {navigate} = this.props.navigation;
-        if(!this.props.navigation.state.params.loggedUserEmail)
+        /*if(!this.props.navigation.state.params.loggedUserEmail)
         {
-            navigate("Login");
+            //navigate("Login");
         }
         else
         {
             if(!this.state.loggedUserEmail)
                 this.setState({loggedUserEmail:this.props.navigation.state.params.loggedUserEmail});
-        }
+        }*/
     }
 
     render(){

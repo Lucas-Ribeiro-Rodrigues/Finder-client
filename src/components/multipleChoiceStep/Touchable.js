@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         alignSelf: "stretch",
         justifyContent: "center",
         borderColor: '#d6d7da',
-        maxHeight:65,
+        maxHeight:75,
         backgroundColor: '#fff',
     },
     textButtonNotActive: {
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         flex: 1,
         borderRadius: 4,
         borderWidth: 0.5,
-        maxHeight: 65,
+        maxHeight: 75,
         alignSelf: "stretch",
         justifyContent: "center",
         backgroundColor: '#DBE0EE',

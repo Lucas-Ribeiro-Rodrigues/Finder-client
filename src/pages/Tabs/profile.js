@@ -8,8 +8,7 @@ export default class Profile extends Component{
     state = {userData: undefined};
     constructor(props){
         super(props);
-        console.log('constructor');
-        getUserData('adaw')
+        getUserData(this.props.email)
             .then(value => {
                 this.setState({userData: value});
             })

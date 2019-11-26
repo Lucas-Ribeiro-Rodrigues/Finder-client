@@ -44,12 +44,14 @@ export default class Map extends Component{
                 if(item.Location)
                 {
                     return(
+                        (item.Situation == "Lost" ?
                         <MapView.Marker 
                             key        = {index}
                             coordinate = {item.Location}
                             title      = {item.Situation == "Lost" ? "Perdido" : "Achado"}
-                            pinColor   = {item.Situation == "Lost" ? "tomato" : "green"}
+                            pinColor   = {"tomato"}
                             description= {item.Subcategory}/>
+                            : null)
                     )
 
                 }

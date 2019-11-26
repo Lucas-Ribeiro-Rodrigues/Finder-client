@@ -19,7 +19,7 @@ export default class ItemDetails extends Component{
                         <CardItem>
                             <Body>
 
-                                <Image source={require('../../../assets/items/mali.jpeg')} style={{height: 200, width: 200, flex: 1,  alignSelf: "center" }}/> 
+                                <Image source={(this.props.utils.item.Image ? {uri: this.props.utils.item.Image} : require('../../../assets/question_mark.png'))} style={{height: 200, width: 200, flex: 1,  alignSelf: "center" }}/> 
                             </Body>
                         </CardItem>
 

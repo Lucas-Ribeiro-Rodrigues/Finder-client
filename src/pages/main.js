@@ -26,7 +26,7 @@ export default class Main extends Component{
     componentDidUpdate()
     {
         let {navigate} = this.props.navigation;
-        /*if(!this.props.navigation.state.params.loggedUserEmail)
+        if(!this.props.navigation.state.params.loggedUserEmail)
         {
             //navigate("Login");
         }
@@ -34,7 +34,7 @@ export default class Main extends Component{
         {
             if(!this.state.loggedUserEmail)
                 this.setState({loggedUserEmail:this.props.navigation.state.params.loggedUserEmail});
-        }*/
+        }
     }
 
     render(){
@@ -75,10 +75,10 @@ export default class Main extends Component{
                     type="FontAwesome" 
                     name="plus"/>
                 {this.state.active? <Button style={{ backgroundColor: '#1f8686' }} onPress={() => navigate('ItemRegister', {navigation: this.props.navigation, situation: "Found", email: this.state.loggedUserEmail})}>
-                    <Icon name="ios-happy"/>
+                    <Text style={{...styles.text_white, fontSize: 24, fontWeight: 'bold'}}>A</Text>
                 </Button>:null}
                 {this.state.active? <Button style={{ backgroundColor: '#1f8686' }} onPress={() => navigate('ItemRegister', {navigation: this.props.navigation, situation: "Lost", email: this.state.loggedUserEmail})}>
-                    <Icon name="md-search"/>
+                    <Text style={{...styles.text_white, fontSize: 24, fontWeight: 'bold'}}>P</Text>
                 </Button>:null}
             </Fab>
             <Footer>

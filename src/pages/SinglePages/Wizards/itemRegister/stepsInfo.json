@@ -39,13 +39,14 @@
             "SecondaryColor": {
                 "Type": "MultipleChoice",
                 "Options":[
-                    "Preto",
                     "Branco",
+                    "Preto",
                     "Vermelho",
                     "Verde",
                     "Azul",
                     "Amarelo",
-                    "Cinza"
+                    "Cinza",
+                    "Dourado"
                 ],
                 "Required": false,
                 "Label": "Cor Secundária"
@@ -138,13 +139,14 @@
             "SecondaryColor": {
                 "Type": "MultipleChoice",
                 "Options":[
-                    "Preto",
                     "Branco",
+                    "Preto",
                     "Vermelho",
                     "Verde",
                     "Azul",
                     "Amarelo",
-                    "Cinza"
+                    "Cinza",
+                    "Dourado"
                 ],
                 "Required": false,
                 "Label": "Cor Secundária"
@@ -183,15 +185,14 @@
             "SecondaryColor": {
                 "Type": "MultipleChoice",
                 "Options":[
-                    "Preto",
                     "Branco",
+                    "Preto",
                     "Vermelho",
                     "Verde",
                     "Azul",
                     "Amarelo",
                     "Cinza",
-                    "Dourado",
-                    "Prateado"
+                    "Dourado"
                 ],
                 "Required": false,
                 "Label": "Cor Secundária"

@@ -1,6 +1,7 @@
 import React, {Component} from 'React';
 import { View, Image } from 'react-native';
 import { Container, Header, Content, Card, CardItem, Text, Button, Icon, Left, Body} from 'native-base';
+import { Linking } from 'expo'
 
 export default class ItemDetails extends Component{
     constructor(props){
@@ -42,16 +43,16 @@ export default class ItemDetails extends Component{
                             </Text>
                         </Body>
                         </CardItem>
-                        <CardItem footer button onPress={() => alert("Ligar")}>
-                        <Text>(19)982782531</Text>
+                        <CardItem footer button onPress={() => Linking.openURL('whatsapp://send?phone=+551999134-7510')}>
+                        <Text>+55(19)99134-7510</Text>
                         </CardItem>
 
 
                         <CardItem>
                             <Left>
 
-                                <Icon name="logo-github" />
-                                <Text>30/10/2019</Text>
+                                <Icon name="ios-calendar" />
+                                <Text>{this.props.utils.item.Date}</Text>
 
                             </Left>
                         </CardItem>
